@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Aristo {
-    private static final String[] taskList = new String[100];
+    private static final Task[] taskList = new Task[100];
     private static int numberOfTasks = 0;
 
     public static void main(String[] args) {
@@ -13,13 +13,13 @@ public class Aristo {
         while (!userInput.equals("bye")) {
             if (userInput.equals("list")) {
                 for (int taskIndex = 0; taskIndex < Aristo.numberOfTasks; taskIndex++) {
-                    String currentTask = Aristo.taskList[taskIndex];
-                    System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
+                    Task currentTask = Aristo.taskList[taskIndex];
+                    System.out.printf("%d. %s\n", taskIndex + 1, currentTask.description);
                 }
             } else {
                 System.out.println("=======================================================");
                 System.out.println("added: " + userInput);
-                Aristo.taskList[Aristo.numberOfTasks] = userInput;
+                Aristo.taskList[Aristo.numberOfTasks] = new Task(userInput);
                 Aristo.numberOfTasks++;
                 System.out.println("=======================================================");
                 System.out.println();
