@@ -1,18 +1,24 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Aristo {
+    private static final String[] taskList = new String[100];
+    private static int numberOfTasks = 0;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        greet();
+        Aristo.greet();
         String userInput = scanner.nextLine();
         while (!userInput.equals("bye")) {
             System.out.println("=======================================================");
-            System.out.println(userInput);
+            System.out.println("added: " + userInput);
+            Aristo.taskList[Aristo.numberOfTasks] = userInput;
+            Aristo.numberOfTasks++;
             System.out.println("=======================================================");
             System.out.println();
             userInput = scanner.nextLine();
         }
-        exit();
+        Aristo.exit();
     }
 
     public static void greet() {
