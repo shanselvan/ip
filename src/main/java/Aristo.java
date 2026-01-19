@@ -9,13 +9,21 @@ public class Aristo {
         Scanner scanner = new Scanner(System.in);
         Aristo.greet();
         String userInput = scanner.nextLine();
+
         while (!userInput.equals("bye")) {
-            System.out.println("=======================================================");
-            System.out.println("added: " + userInput);
-            Aristo.taskList[Aristo.numberOfTasks] = userInput;
-            Aristo.numberOfTasks++;
-            System.out.println("=======================================================");
-            System.out.println();
+            if (userInput.equals("list")) {
+                for (int taskIndex = 0; taskIndex < Aristo.numberOfTasks; taskIndex++) {
+                    String currentTask = Aristo.taskList[taskIndex];
+                    System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
+                }
+            } else {
+                System.out.println("=======================================================");
+                System.out.println("added: " + userInput);
+                Aristo.taskList[Aristo.numberOfTasks] = userInput;
+                Aristo.numberOfTasks++;
+                System.out.println("=======================================================");
+                System.out.println();
+            }
             userInput = scanner.nextLine();
         }
         Aristo.exit();
