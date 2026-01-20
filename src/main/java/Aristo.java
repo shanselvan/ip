@@ -36,6 +36,10 @@ public class Aristo {
                     Aristo.handleTodo(taskIndexString);
                     break;
 
+                case "deadline":
+                    Aristo.handleDeadline(taskIndexString);
+                    break;
+
                 default:
                     System.out.println("=======================================================");
                     System.out.println("I have added the task: " + userInput);
@@ -69,7 +73,7 @@ public class Aristo {
     public static void printTasks() {
         for (int taskIndex = 0; taskIndex < Aristo.numberOfTasks; taskIndex++) {
             Task currentTask = Aristo.taskList[taskIndex];
-            System.out.printf("%d.[%s] %s\n", taskIndex + 1, currentTask.getStatusIcon(), currentTask.description);
+            System.out.printf("%d. %s\n", taskIndex + 1, currentTask.toString());
         }
     }
 
@@ -101,5 +105,20 @@ public class Aristo {
                 There are %d tasks in your list now.
                 """, todoTask.toString(), Aristo.numberOfTasks);
 
+    }
+
+    public static void handleDeadline(String taskDetails) {
+        String[] taskComponents = taskDetails.split(" /by ", 2);
+        String description = taskComponents[0];
+        String deadline = taskComponents[1];
+
+        Deadline deadlineTask = new Deadline(description, deadline);
+        Aristo.taskList[Aristo.numberOfTasks] = deadlineTask;
+        Aristo.numberOfTasks++;
+        System.out.printf("""
+                Noted, I have added this task to your list:
+                %s
+                There are %d tasks in your list now.
+                """, deadlineTask.toString(), Aristo.numberOfTasks);
     }
 }
