@@ -10,22 +10,35 @@ public class Aristo {
         String userInput = scanner.nextLine();
 
         while (!userInput.equals("bye")) {
+            String[] parsedUserInput = userInput.split(" ", 2);
+            String command = parsedUserInput[0];
+            String taskIndexString = parsedUserInput.length == 1
+                    ? ""
+                    : parsedUserInput[1];
 
-            if (Aristo.isListCommand(userInput)) {
-                Aristo.printTasks();
-            } else if (Aristo.isMarkCommand(userInput)) {
-                int taskIndex = Integer.parseInt(userInput.substring(5));
-                Aristo.taskList[taskIndex - 1].markAsDone();
-            } else if (Aristo.isUnmarkCommand(userInput)) {
-                int taskIndex = Integer.parseInt(userInput.substring(7));
-                Aristo.taskList[taskIndex - 1].markAsNotDone();
-            } else {
-                System.out.println("=======================================================");
-                System.out.println("I have added the task: " + userInput);
-                Aristo.taskList[Aristo.numberOfTasks] = new Task(userInput);
-                Aristo.numberOfTasks++;
-                System.out.println("=======================================================");
-                System.out.println();
+            switch (command) {
+                case "list":
+                    Aristo.printTasks();
+                    break;
+
+                case "mark":
+                    int taskIndexInteger = Integer.parseInt(taskIndexString);
+                    Aristo.handleMarkTask(taskIndexInteger);
+                    break;
+
+                case "unmark":
+                    int taskIndex = Integer.parseInt(taskIndexString);
+                    Aristo.handleUnmarkTask(taskIndex);
+                    break;
+
+                default:
+                    System.out.println("=======================================================");
+                    System.out.println("I have added the task: " + userInput);
+                    Aristo.taskList[Aristo.numberOfTasks] = new Task(userInput);
+                    Aristo.numberOfTasks++;
+                    System.out.println("=======================================================");
+                    System.out.println();
+
             }
             userInput = scanner.nextLine();
         }
@@ -48,22 +61,28 @@ public class Aristo {
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
     }
 
-    public static boolean isMarkCommand(String userInput) {
-        return userInput.startsWith("mark ");
-    }
-
-    public static boolean isUnmarkCommand(String userInput) {
-        return userInput.startsWith("unmark ");
-    }
-
-    public static boolean isListCommand(String userInput) {
-        return userInput.equals("list");
-    }
-
     public static void printTasks() {
         for (int taskIndex = 0; taskIndex < Aristo.numberOfTasks; taskIndex++) {
             Task currentTask = Aristo.taskList[taskIndex];
             System.out.printf("%d.[%s] %s\n", taskIndex + 1, currentTask.getStatusIcon(), currentTask.description);
         }
+    }
+
+    public static void handleMarkTask(int taskIndexInteger) {
+        Task task = Aristo.taskList[taskIndexInteger - 1];
+        task.markAsDone();
+        System.out.printf("""
+                Great job! I have marked this task as done.
+                [%s] %s
+                """, task.getStatusIcon(), task.description);
+    }
+
+    public static void handleUnmarkTask(int taskIndexInteger) {
+        Task task = Aristo.taskList[taskIndexInteger - 1];
+        task.markAsNotDone();
+        System.out.printf("""
+                Alright, I have marked this task as not done yet.
+                [%s] %s
+                """, task.getStatusIcon(), task.description);
     }
 }
