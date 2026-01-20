@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Aristo {
@@ -29,6 +30,10 @@ public class Aristo {
                 case "unmark":
                     int taskIndex = Integer.parseInt(taskIndexString);
                     Aristo.handleUnmarkTask(taskIndex);
+                    break;
+
+                case "todo":
+                    Aristo.handleTodo(taskIndexString);
                     break;
 
                 default:
@@ -84,5 +89,17 @@ public class Aristo {
                 Alright, I have marked this task as not done yet.
                 [%s] %s
                 """, task.getStatusIcon(), task.description);
+    }
+
+    public static void handleTodo(String description) {
+        Todo todoTask = new Todo(description);
+        Aristo.taskList[Aristo.numberOfTasks] = todoTask;
+        Aristo.numberOfTasks++;
+        System.out.printf("""
+                Noted, I have added this To-do task to your list:
+                %s
+                There are %d tasks in your list now.
+                """, todoTask.toString(), Aristo.numberOfTasks);
+
     }
 }
