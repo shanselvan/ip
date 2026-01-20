@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Aristo {
@@ -13,7 +12,8 @@ public class Aristo {
         while (!userInput.equals("bye")) {
             String[] parsedUserInput = userInput.split(" ", 2);
             String command = parsedUserInput[0];
-            String taskIndexString = parsedUserInput.length == 1
+            String taskIndexString =
+                    parsedUserInput.length == 1
                     ? ""
                     : parsedUserInput[1];
 
@@ -77,7 +77,7 @@ public class Aristo {
     public static void printTasks() {
         for (int taskIndex = 0; taskIndex < Aristo.numberOfTasks; taskIndex++) {
             Task currentTask = Aristo.taskList[taskIndex];
-            System.out.printf("%d. %s\n", taskIndex + 1, currentTask.toString());
+            System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
         }
     }
 
@@ -86,8 +86,8 @@ public class Aristo {
         task.markAsDone();
         System.out.printf("""
                 Great job! I have marked this task as done.
-                [%s] %s
-                """, task.getStatusIcon(), task.description);
+                %s
+                """, task);
     }
 
     public static void handleUnmarkTask(int taskIndexInteger) {
@@ -95,8 +95,8 @@ public class Aristo {
         task.markAsNotDone();
         System.out.printf("""
                 Alright, I have marked this task as not done yet.
-                [%s] %s
-                """, task.getStatusIcon(), task.description);
+                %s
+                """, task);
     }
 
     public static void handleTodo(String description) {
@@ -107,7 +107,7 @@ public class Aristo {
                 Noted, I have added this To-do task to your list:
                 %s
                 There are %d tasks in your list now.
-                """, todoTask.toString(), Aristo.numberOfTasks);
+                """, todoTask, Aristo.numberOfTasks);
 
     }
 
@@ -123,7 +123,7 @@ public class Aristo {
                 Noted, I have added this task to your list:
                 %s
                 There are %d tasks in your list now.
-                """, deadlineTask.toString(), Aristo.numberOfTasks);
+                """, deadlineTask, Aristo.numberOfTasks);
     }
 
     public static void handleEvent(String taskDetails) {
@@ -142,6 +142,6 @@ public class Aristo {
                 Noted, I have added this task to your list:
                 %s
                 There are %d tasks in your list now.
-                """, eventTask.toString(), Aristo.numberOfTasks);
+                """, eventTask, Aristo.numberOfTasks);
     }
 }
