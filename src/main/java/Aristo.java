@@ -40,6 +40,10 @@ public class Aristo {
                     Aristo.handleDeadline(taskIndexString);
                     break;
 
+                case "event":
+                    Aristo.handleEvent(taskIndexString);
+                    break;
+
                 default:
                     System.out.println("=======================================================");
                     System.out.println("I have added the task: " + userInput);
@@ -120,5 +124,24 @@ public class Aristo {
                 %s
                 There are %d tasks in your list now.
                 """, deadlineTask.toString(), Aristo.numberOfTasks);
+    }
+
+    public static void handleEvent(String taskDetails) {
+        String[] taskComponents = taskDetails.split(" /from ", 2);
+        String description = taskComponents[0];
+        String fromAndTo = taskComponents[1];
+
+        String[] fromToComponents = fromAndTo.split(" /to ", 2);
+        String from = fromToComponents[0];
+        String to = fromToComponents[1];
+
+        Event eventTask = new Event(description, from, to);
+        Aristo.taskList[Aristo.numberOfTasks] = eventTask;
+        Aristo.numberOfTasks++;
+        System.out.printf("""
+                Noted, I have added this task to your list:
+                %s
+                There are %d tasks in your list now.
+                """, eventTask.toString(), Aristo.numberOfTasks);
     }
 }
