@@ -83,7 +83,11 @@ public class Aristo {
         System.out.println();
     }
 
-    public static void handleMarkTask(int taskIndexInteger) {
+    public static void handleMarkTask(int taskIndexInteger) throws AristoException {
+        if (taskIndexInteger > Aristo.numberOfTasks) {
+            throw new AristoException("Invalid task number! Please retry with a valid task number.\n");
+        }
+
         Task task = Aristo.taskList[taskIndexInteger - 1];
         task.markAsDone();
         System.out.printf("""
