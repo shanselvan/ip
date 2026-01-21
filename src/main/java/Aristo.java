@@ -50,7 +50,6 @@ public class Aristo {
                 }
             } catch (AristoException e) {
                 System.out.println(e.getMessage());
-                System.out.println("Please enter a valid command!\n");
             }
             userInput = scanner.nextLine();
         }
@@ -73,9 +72,13 @@ public class Aristo {
     }
 
     public static void printTasks() {
-        for (int taskIndex = 0; taskIndex < Aristo.numberOfTasks; taskIndex++) {
-            Task currentTask = Aristo.taskList[taskIndex];
-            System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
+        if (Aristo.numberOfTasks == 0) {
+            System.out.println("There are no tasks in your list.");
+        } else {
+            for (int taskIndex = 0; taskIndex < Aristo.numberOfTasks; taskIndex++) {
+                Task currentTask = Aristo.taskList[taskIndex];
+                System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
+            }
         }
         System.out.println();
     }
