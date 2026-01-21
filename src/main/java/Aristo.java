@@ -33,10 +33,18 @@ public class Aristo {
 
                     case "unmark":
                         if (taskIndexString.isBlank()) {
-                            throw new AristoException("Please specify a task number to mark as done!\n");
+                            throw new AristoException("Please specify a task number to unmark!\n");
                         }
                         int taskIndex = Integer.parseInt(taskIndexString);
                         Aristo.handleUnmarkTask(taskIndex);
+                        break;
+
+                    case "delete":
+                        if (taskIndexString.isBlank()) {
+                            throw new AristoException("Please specify a task number to delete!\n");
+                        }
+                        int taskIndexInt = Integer.parseInt(taskIndexString);
+                        Aristo.handleDeleteTask(taskIndexInt);
                         break;
 
                     case "todo":
@@ -107,10 +115,14 @@ public class Aristo {
         }
     }
 
-    public static void handleMarkTask(int taskIndexInteger) throws AristoException {
+    public static void checkIsValidTaskNumber(int taskIndexInteger) throws AristoException {
         if (isValidTaskNumber(taskIndexInteger)) {
             throw new AristoException("Invalid task number! Please retry with a valid task number.\n");
         }
+    }
+
+    public static void handleMarkTask(int taskIndexInteger) throws AristoException {
+        Aristo.checkIsValidTaskNumber(taskIndexInteger);
 
         Task task = Aristo.taskList[taskIndexInteger - 1];
 
@@ -127,9 +139,8 @@ public class Aristo {
     }
 
     public static void handleUnmarkTask(int taskIndexInteger) throws AristoException {
-        if (isValidTaskNumber(taskIndexInteger)) {
-            throw new AristoException("Invalid task number! Please retry with a valid task number.\n");
-        }
+        Aristo.checkIsValidTaskNumber(taskIndexInteger);
+
         Task task = Aristo.taskList[taskIndexInteger - 1];
 
         if (!task.isDone) {
@@ -142,6 +153,10 @@ public class Aristo {
                 %s
                 
                 """, task);
+    }
+
+    public static void handleDeleteTask(int taskIndexInteger) throws AristoException {
+        Aristo.checkIsValidTaskNumber(taskIndexInteger);
     }
 
     public static void handleTodo(String description) throws AristoException {
