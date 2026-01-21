@@ -107,6 +107,11 @@ public class Aristo {
         }
 
         Task task = Aristo.taskList[taskIndexInteger - 1];
+
+        if (task.isDone) {
+            throw new AristoException("Task " + taskIndexInteger + " has already been marked as done.\n");
+        }
+
         task.markAsDone();
         System.out.printf("""
                 Great job! I have marked this task as done.
@@ -120,6 +125,11 @@ public class Aristo {
             throw new AristoException("Invalid task number! Please retry with a valid task number.\n");
         }
         Task task = Aristo.taskList[taskIndexInteger - 1];
+
+        if (!task.isDone) {
+            throw new AristoException("Task " + taskIndexInteger + " is already marked as not done.\n");
+        }
+
         task.markAsNotDone();
         System.out.printf("""
                 Alright, I have marked this task as not done yet.
