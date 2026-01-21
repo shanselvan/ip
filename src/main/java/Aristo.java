@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Aristo {
@@ -170,17 +169,42 @@ public class Aristo {
         // System.out.println(Arrays.toString(taskComponents));
         String description = taskComponents[0];
         String deadline = taskComponents[1];
+
+        if (description.isBlank() || deadline.isBlank()) {
+            throw new AristoException("Task description & deadline cannot be empty! Please try again.\n");
+        }
+
         return new Deadline(description, deadline);
     }
 
-    public static void handleEvent(String taskDetails) {
+    public static void handleEvent(String taskDetails) throws AristoException {
         String[] taskComponents = taskDetails.split(" /from ", 2);
+
+        if (taskComponents.length != 2) {
+            throw new AristoException("Have you included the description & times? e.g XXX /from YYY /to ZZZ");
+        }
+
         String description = taskComponents[0];
         String fromAndTo = taskComponents[1];
 
+        if (description.isBlank()) {
+            throw new AristoException("Please include the task description!\n");
+        }
+
         String[] fromToComponents = fromAndTo.split(" /to ", 2);
+
+        if (fromToComponents.length != 2) {
+            throw new AristoException("Have you included the from and to times? e.g XXX /from YYY /to ZZZ\n");
+        }
+
         String from = fromToComponents[0];
         String to = fromToComponents[1];
+
+        if (from.isBlank()) {
+            throw new AristoException("Please specify a from time!\n");
+        } else if (to.isBlank()) {
+            throw new AristoException("Please specify a to time!\n");
+        }
 
         Event eventTask = new Event(description, from, to);
         Aristo.taskList[Aristo.numberOfTasks] = eventTask;
