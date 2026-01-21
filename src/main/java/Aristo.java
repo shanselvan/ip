@@ -59,15 +59,14 @@ public class Aristo {
     }
 
     public static void greet() {
-        System.out.println();
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
         System.out.println("Hello, human!");
         System.out.println("Aristo here to assist. Fire away!");
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
+        System.out.println();
     }
 
     public static void exit() {
-        System.out.println();
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
         System.out.println("Goodbye!");
         System.out.println("Aristo eagerly awaits your return...");
@@ -79,6 +78,7 @@ public class Aristo {
             Task currentTask = Aristo.taskList[taskIndex];
             System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
         }
+        System.out.println();
     }
 
     public static void handleMarkTask(int taskIndexInteger) {
@@ -87,6 +87,7 @@ public class Aristo {
         System.out.printf("""
                 Great job! I have marked this task as done.
                 %s
+                
                 """, task);
     }
 
@@ -96,6 +97,7 @@ public class Aristo {
         System.out.printf("""
                 Alright, I have marked this task as not done yet.
                 %s
+                
                 """, task);
     }
 
@@ -104,9 +106,10 @@ public class Aristo {
         Aristo.taskList[Aristo.numberOfTasks] = todoTask;
         Aristo.numberOfTasks++;
         System.out.printf("""
-                Noted, I have added this To-do task to your list:
+                Noted, I have added this task to your list:
                 %s
                 There are %d tasks in your list now.
+                
                 """, todoTask, Aristo.numberOfTasks);
 
     }
@@ -123,6 +126,7 @@ public class Aristo {
                 Noted, I have added this task to your list:
                 %s
                 There are %d tasks in your list now.
+                
                 """, deadlineTask, Aristo.numberOfTasks);
     }
 
@@ -139,9 +143,10 @@ public class Aristo {
         Aristo.taskList[Aristo.numberOfTasks] = eventTask;
         Aristo.numberOfTasks++;
         System.out.printf("""
-                Noted, I have added this task to your list:
+                Noted, I have added this event to your list:
                 %s
                 There are %d tasks in your list now.
+                
                 """, eventTask, Aristo.numberOfTasks);
     }
 }
