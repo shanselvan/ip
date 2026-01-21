@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Aristo {
@@ -20,7 +21,7 @@ public class Aristo {
 
                 switch (command) {
                     case "list":
-                        Aristo.printTasks();
+                        Aristo.printTaskList();
                         break;
 
                     case "mark":
@@ -75,7 +76,7 @@ public class Aristo {
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
     }
 
-    public static void printTasks() {
+    public static void printTaskList() {
         if (Aristo.numberOfTasks == 0) {
             System.out.println("There are no tasks in your list.");
         } else {
@@ -144,12 +145,12 @@ public class Aristo {
 
     }
 
-    public static void handleDeadline(String taskDetails) {
-        String[] taskComponents = taskDetails.split(" /by ", 2);
-        String description = taskComponents[0];
-        String deadline = taskComponents[1];
+    public static void handleDeadline(String taskDetails) throws AristoException {
+        if (taskDetails.isBlank()) {
+            throw new AristoException("Please provide a task description and its deadline! e.g XXX /by YYY\n");
+        }
 
-        Deadline deadlineTask = new Deadline(description, deadline);
+        Deadline deadlineTask = getDeadline(taskDetails);
         Aristo.taskList[Aristo.numberOfTasks] = deadlineTask;
         Aristo.numberOfTasks++;
         System.out.printf("""
@@ -157,6 +158,19 @@ public class Aristo {
                 %s
                 """, deadlineTask);
         Aristo.printNumberOfTasks();
+    }
+
+    private static Deadline getDeadline(String taskDetails) throws AristoException {
+        // System.out.println(taskDetails);
+        String[] taskComponents = taskDetails.split(" /by ", 2);
+
+        if (taskComponents.length != 2) {
+            throw new AristoException("Ensure you have included both the task description & deadline! e.g XXX /by YYY\n");
+        }
+        // System.out.println(Arrays.toString(taskComponents));
+        String description = taskComponents[0];
+        String deadline = taskComponents[1];
+        return new Deadline(description, deadline);
     }
 
     public static void handleEvent(String taskDetails) {
