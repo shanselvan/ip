@@ -24,11 +24,17 @@ public class Aristo {
                         break;
 
                     case "mark":
+                        if (taskIndexString.isBlank()) {
+                            throw new AristoException("Please specify a task number to mark as done!\n");
+                        }
                         int taskIndexInteger = Integer.parseInt(taskIndexString);
                         Aristo.handleMarkTask(taskIndexInteger);
                         break;
 
                     case "unmark":
+                        if (taskIndexString.isBlank()) {
+                            throw new AristoException("Please specify a task number to mark as done!\n");
+                        }
                         int taskIndex = Integer.parseInt(taskIndexString);
                         Aristo.handleUnmarkTask(taskIndex);
                         break;
