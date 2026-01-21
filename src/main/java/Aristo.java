@@ -10,48 +10,47 @@ public class Aristo {
         String userInput = scanner.nextLine();
 
         while (!userInput.equals("bye")) {
-            String[] parsedUserInput = userInput.split(" ", 2);
-            String command = parsedUserInput[0];
-            String taskIndexString =
-                    parsedUserInput.length == 1
-                    ? ""
-                    : parsedUserInput[1];
+            try {
+                String[] parsedUserInput = userInput.split(" ", 2);
+                String command = parsedUserInput[0];
+                String taskIndexString =
+                        parsedUserInput.length == 1
+                                ? ""
+                                : parsedUserInput[1];
 
-            switch (command) {
-                case "list":
-                    Aristo.printTasks();
-                    break;
+                switch (command) {
+                    case "list":
+                        Aristo.printTasks();
+                        break;
 
-                case "mark":
-                    int taskIndexInteger = Integer.parseInt(taskIndexString);
-                    Aristo.handleMarkTask(taskIndexInteger);
-                    break;
+                    case "mark":
+                        int taskIndexInteger = Integer.parseInt(taskIndexString);
+                        Aristo.handleMarkTask(taskIndexInteger);
+                        break;
 
-                case "unmark":
-                    int taskIndex = Integer.parseInt(taskIndexString);
-                    Aristo.handleUnmarkTask(taskIndex);
-                    break;
+                    case "unmark":
+                        int taskIndex = Integer.parseInt(taskIndexString);
+                        Aristo.handleUnmarkTask(taskIndex);
+                        break;
 
-                case "todo":
-                    Aristo.handleTodo(taskIndexString);
-                    break;
+                    case "todo":
+                        Aristo.handleTodo(taskIndexString);
+                        break;
 
-                case "deadline":
-                    Aristo.handleDeadline(taskIndexString);
-                    break;
+                    case "deadline":
+                        Aristo.handleDeadline(taskIndexString);
+                        break;
 
-                case "event":
-                    Aristo.handleEvent(taskIndexString);
-                    break;
+                    case "event":
+                        Aristo.handleEvent(taskIndexString);
+                        break;
 
-                default:
-                    System.out.println("=======================================================");
-                    System.out.println("I have added the task: " + userInput);
-                    Aristo.taskList[Aristo.numberOfTasks] = new Task(userInput);
-                    Aristo.numberOfTasks++;
-                    System.out.println("=======================================================");
-                    System.out.println();
-
+                    default:
+                        throw new AristoException("Ehm, never heard of that command before!");
+                }
+            } catch (AristoException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please enter a valid command!\n");
             }
             userInput = scanner.nextLine();
         }
