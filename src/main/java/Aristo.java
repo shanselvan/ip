@@ -60,7 +60,7 @@ public class Aristo {
                         break;
 
                     default:
-                        throw new AristoException("Ehm, never heard of that command before!");
+                        throw new AristoException("Ehm, never heard of that command before!\n");
                 }
             } catch (AristoException e) {
                 System.out.println(e.getMessage());
@@ -157,6 +157,13 @@ public class Aristo {
 
     public static void handleDeleteTask(int taskIndexInteger) throws AristoException {
         Aristo.checkIsValidTaskNumber(taskIndexInteger);
+
+        Task task = taskList.remove(taskIndexInteger - 1);
+        System.out.printf("""
+                Okay, I have removed this task from your list:
+                %s
+                """, task);
+        Aristo.printNumberOfTasks();
     }
 
     public static void handleTodo(String description) throws AristoException {
