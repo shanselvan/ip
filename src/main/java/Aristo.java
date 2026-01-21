@@ -1,8 +1,8 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Aristo {
-    private static final Task[] taskList = new Task[100];
-    private static int numberOfTasks = 0;
+    private static final ArrayList<Task> taskList = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -71,7 +71,7 @@ public class Aristo {
     }
 
     public static boolean isValidTaskNumber(int taskIndexInteger) {
-        return taskIndexInteger > Aristo.numberOfTasks;
+        return (taskIndexInteger > taskList.size() || taskIndexInteger < 1);
     }
 
     public static void greet() {
@@ -90,11 +90,11 @@ public class Aristo {
     }
 
     public static void printTaskList() {
-        if (Aristo.numberOfTasks == 0) {
+        if (taskList.isEmpty()) {
             System.out.println("There are no tasks in your list.");
         } else {
-            for (int taskIndex = 0; taskIndex < Aristo.numberOfTasks; taskIndex++) {
-                Task currentTask = Aristo.taskList[taskIndex];
+            for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
+                Task currentTask = taskList.get(taskIndex);
                 System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
             }
         }
@@ -102,7 +102,7 @@ public class Aristo {
     }
 
     public static void printNumberOfTasks() {
-        if (Aristo.numberOfTasks == 1) {
+        if (taskList.size() == 1) {
             System.out.print("""
                 There is 1 task in your list now.
                 
@@ -111,7 +111,7 @@ public class Aristo {
             System.out.printf("""
                 There are %d tasks in your list now.
                 
-                """, Aristo.numberOfTasks);
+                """, taskList.size());
         }
     }
 
@@ -124,7 +124,7 @@ public class Aristo {
     public static void handleMarkTask(int taskIndexInteger) throws AristoException {
         Aristo.checkIsValidTaskNumber(taskIndexInteger);
 
-        Task task = Aristo.taskList[taskIndexInteger - 1];
+        Task task = taskList.get(taskIndexInteger - 1);
 
         if (task.isDone) {
             throw new AristoException("Task " + taskIndexInteger + " has already been marked as done.\n");
@@ -141,7 +141,7 @@ public class Aristo {
     public static void handleUnmarkTask(int taskIndexInteger) throws AristoException {
         Aristo.checkIsValidTaskNumber(taskIndexInteger);
 
-        Task task = Aristo.taskList[taskIndexInteger - 1];
+        Task task = taskList.get(taskIndexInteger - 1);
 
         if (!task.isDone) {
             throw new AristoException("Task " + taskIndexInteger + " is already marked as not done.\n");
@@ -165,8 +165,7 @@ public class Aristo {
         }
 
         Todo todoTask = new Todo(description);
-        Aristo.taskList[Aristo.numberOfTasks] = todoTask;
-        Aristo.numberOfTasks++;
+        taskList.add(todoTask);
         System.out.printf("""
                 Noted, I have added this task to your list:
                 %s
@@ -181,8 +180,7 @@ public class Aristo {
         }
 
         Deadline deadlineTask = getDeadline(taskDetails);
-        Aristo.taskList[Aristo.numberOfTasks] = deadlineTask;
-        Aristo.numberOfTasks++;
+        taskList.add(deadlineTask);
         System.out.printf("""
                 Noted, I have added this task to your list:
                 %s
@@ -238,8 +236,7 @@ public class Aristo {
         }
 
         Event eventTask = new Event(description, from, to);
-        Aristo.taskList[Aristo.numberOfTasks] = eventTask;
-        Aristo.numberOfTasks++;
+        taskList.add(eventTask);
         System.out.printf("""
                 Noted, I have added this event to your list:
                 %s
