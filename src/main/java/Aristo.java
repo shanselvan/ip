@@ -91,6 +91,20 @@ public class Aristo {
                 """, task);
     }
 
+    public static void printNumberOfTasks() {
+        if (Aristo.numberOfTasks == 1) {
+            System.out.print("""
+                There is 1 task in your list now.
+                
+                """);
+        } else {
+            System.out.printf("""
+                There are %d tasks in your list now.
+                
+                """, Aristo.numberOfTasks);
+        }
+    }
+
     public static void handleUnmarkTask(int taskIndexInteger) {
         Task task = Aristo.taskList[taskIndexInteger - 1];
         task.markAsNotDone();
@@ -108,9 +122,8 @@ public class Aristo {
         System.out.printf("""
                 Noted, I have added this task to your list:
                 %s
-                There are %d tasks in your list now.
-                
-                """, todoTask, Aristo.numberOfTasks);
+                """, todoTask);
+        Aristo.printNumberOfTasks();
 
     }
 
@@ -125,9 +138,8 @@ public class Aristo {
         System.out.printf("""
                 Noted, I have added this task to your list:
                 %s
-                There are %d tasks in your list now.
-                
-                """, deadlineTask, Aristo.numberOfTasks);
+                """, deadlineTask);
+        Aristo.printNumberOfTasks();
     }
 
     public static void handleEvent(String taskDetails) {
@@ -145,8 +157,7 @@ public class Aristo {
         System.out.printf("""
                 Noted, I have added this event to your list:
                 %s
-                There are %d tasks in your list now.
-                
-                """, eventTask, Aristo.numberOfTasks);
+                """, eventTask);
+        Aristo.printNumberOfTasks();
     }
 }
