@@ -1,0 +1,11 @@
+todo finish math homework
+deadline submit assignment /by 23 Jan 5pm
+list
+event my birthday party /from 25 Jan 5pm /to probably 7pm
+list
+mark 1
+mark 2
+list
+unmark 1
+list
+bye

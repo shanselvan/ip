@@ -1,7 +1,45 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+* * * * * * * * * * * * * * * * * * * * * * * * * *
+Hello, human!
+Aristo here to assist. Fire away!
+* * * * * * * * * * * * * * * * * * * * * * * * * *
 
+Noted, I have added this task to your list:
+[T][ ] finish math homework
+There is 1 task in your list now.
+
+Noted, I have added this task to your list:
+[D][ ] submit assignment (by: 23 Jan 5pm)
+There are 2 tasks in your list now.
+
+1. [T][ ] finish math homework
+2. [D][ ] submit assignment (by: 23 Jan 5pm)
+
+Noted, I have added this event to your list:
+[E][ ] my birthday party (from: 25 Jan 5pm to: probably 7pm)
+There are 3 tasks in your list now.
+
+1. [T][ ] finish math homework
+2. [D][ ] submit assignment (by: 23 Jan 5pm)
+3. [E][ ] my birthday party (from: 25 Jan 5pm to: probably 7pm)
+
+Great job! I have marked this task as done.
+[T][X] finish math homework
+
+Great job! I have marked this task as done.
+[D][X] submit assignment (by: 23 Jan 5pm)
+
+1. [T][X] finish math homework
+2. [D][X] submit assignment (by: 23 Jan 5pm)
+3. [E][ ] my birthday party (from: 25 Jan 5pm to: probably 7pm)
+
+Alright, I have marked this task as not done yet.
+[T][ ] finish math homework
+
+1. [T][ ] finish math homework
+2. [D][X] submit assignment (by: 23 Jan 5pm)
+3. [E][ ] my birthday party (from: 25 Jan 5pm to: probably 7pm)
+
+* * * * * * * * * * * * * * * * * * * * * * * * * *
+Goodbye!
+Aristo eagerly awaits your return...
+* * * * * * * * * * * * * * * * * * * * * * * * * *
