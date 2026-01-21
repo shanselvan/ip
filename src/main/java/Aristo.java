@@ -56,6 +56,10 @@ public class Aristo {
         Aristo.exit();
     }
 
+    public static boolean isValidTaskNumber(int taskIndexInteger) {
+        return taskIndexInteger > Aristo.numberOfTasks;
+    }
+
     public static void greet() {
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
         System.out.println("Hello, human!");
@@ -81,10 +85,6 @@ public class Aristo {
             }
         }
         System.out.println();
-    }
-
-    public static boolean isValidTaskNumber(int taskIndexInteger) {
-        return taskIndexInteger > Aristo.numberOfTasks;
     }
 
     public static void printNumberOfTasks() {
@@ -128,7 +128,11 @@ public class Aristo {
                 """, task);
     }
 
-    public static void handleTodo(String description) {
+    public static void handleTodo(String description) throws AristoException {
+        if (description.isBlank()) {
+            throw new AristoException("Task description is empty, please retry with a valid task description.\n");
+        }
+
         Todo todoTask = new Todo(description);
         Aristo.taskList[Aristo.numberOfTasks] = todoTask;
         Aristo.numberOfTasks++;
