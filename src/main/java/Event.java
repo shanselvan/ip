@@ -22,7 +22,7 @@ public class Event extends Task {
     @Override
     public String toFileString() {
         int isDone = this.isDone ? 1 : 0;
-        return "E | " + isDone + " | " + this.description + " | " + from.format(OUTPUT_FORMATTER)
-                + " | " + to.format(OUTPUT_FORMATTER);
+        return "E | " + isDone + " | " + this.description + " | " + from.format(INPUT_FORMATTER)
+                + " | " + to.format(INPUT_FORMATTER);
     }
 }
