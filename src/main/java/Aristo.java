@@ -17,11 +17,9 @@ public class Aristo {
 
         while (!userInput.equals("bye")) {
             try {
-                String[] parsedUserInput = userInput.split(" ", 2);
-                String command = parsedUserInput[0];
-                String taskIndexString = (parsedUserInput.length == 1)
-                        ? ""
-                        : parsedUserInput[1];
+                String[] parsed = Parser.parseCommand(userInput);
+                String command = parsed[0];
+                String taskIndexString = parsed[1];
 
                 switch (command) {
                 case "list":
@@ -29,10 +27,7 @@ public class Aristo {
                     break;
 
                 case "mark":
-                    if (taskIndexString.isBlank()) {
-                        throw new AristoException("Please specify a task number to mark as done!\n");
-                    }
-                    int taskIndexInteger = Integer.parseInt(taskIndexString);
+                    int taskIndexInteger = Parser.parseTaskIndex(taskIndexString);
                     Aristo.handleMarkTask(taskIndexInteger);
                     break;
 
@@ -149,52 +144,23 @@ public class Aristo {
     }
 
     private static Deadline getDeadline(String taskDetails) throws AristoException {
-        // System.out.println(taskDetails);
-        String[] taskComponents = taskDetails.split(" /by ", 2);
+        String[] taskComponents = Parser.parseDeadline(taskDetails);
 
-        if (taskComponents.length != 2) {
-            throw new AristoException("""
-                Ensure you have included both the task description & deadline! e.g XXX /by YYY\n
-                """
-            );
-        }
-        // System.out.println(Arrays.toString(taskComponents));
         String description = taskComponents[0];
         String deadline = taskComponents[1];
-
-        if (description.isBlank() || deadline.isBlank()) {
-            throw new AristoException("Task description & deadline cannot be empty! Please try again.\n");
-        }
 
         try {
             return new Deadline(description, deadline);
         } catch (DateTimeParseException e) {
-            throw new AristoException("Invalid date format! Please enter a valid date in the format yyyy-MM-dd\n");
+            throw new AristoException("Invalid date format! Please enter a valid date in the format yyyy-MM-dd.\n");
         }
     }
 
     public static void handleEvent(String taskDetails) throws AristoException {
-        String[] taskComponents = taskDetails.split(" /from ", 2);
-
-        if (taskComponents.length != 2) {
-            throw new AristoException("Have you included the description & times? e.g XXX /from YYY /to ZZZ");
-        }
-
+        String[] taskComponents = Parser.parseEvent(taskDetails);
         String description = taskComponents[0];
-        String fromAndTo = taskComponents[1];
-
-        if (description.isBlank()) {
-            throw new AristoException("Please include the task description!\n");
-        }
-
-        String[] fromToComponents = fromAndTo.split(" /to ", 2);
-
-        if (fromToComponents.length != 2) {
-            throw new AristoException("Have you included the from and to times? e.g XXX /from YYY /to ZZZ.\n");
-        }
-
-        String from = fromToComponents[0];
-        String to = fromToComponents[1];
+        String from = taskComponents[1];
+        String to = taskComponents[2];
 
         if (from.isBlank()) {
             throw new AristoException("Please specify a from time!\n");
