@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Aristo {
-    private static final ArrayList<Task> taskList = new ArrayList<>();
+    private static final ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -13,54 +13,53 @@ public class Aristo {
             try {
                 String[] parsedUserInput = userInput.split(" ", 2);
                 String command = parsedUserInput[0];
-                String taskIndexString =
-                        parsedUserInput.length == 1
-                                ? ""
-                                : parsedUserInput[1];
+                String taskIndexString = (parsedUserInput.length == 1)
+                                       ? ""
+                                       : parsedUserInput[1];
 
                 switch (command) {
-                    case "list":
-                        Aristo.printTaskList();
-                        break;
+                case "list":
+                    Aristo.printTaskList();
+                    break;
 
-                    case "mark":
-                        if (taskIndexString.isBlank()) {
-                            throw new AristoException("Please specify a task number to mark as done!\n");
-                        }
-                        int taskIndexInteger = Integer.parseInt(taskIndexString);
-                        Aristo.handleMarkTask(taskIndexInteger);
-                        break;
+                case "mark":
+                    if (taskIndexString.isBlank()) {
+                        throw new AristoException("Please specify a task number to mark as done!\n");
+                    }
+                    int taskIndexInteger = Integer.parseInt(taskIndexString);
+                    Aristo.handleMarkTask(taskIndexInteger);
+                    break;
 
-                    case "unmark":
-                        if (taskIndexString.isBlank()) {
-                            throw new AristoException("Please specify a task number to unmark!\n");
-                        }
-                        int taskIndex = Integer.parseInt(taskIndexString);
-                        Aristo.handleUnmarkTask(taskIndex);
-                        break;
+                case "unmark":
+                    if (taskIndexString.isBlank()) {
+                        throw new AristoException("Please specify a task number to unmark!\n");
+                    }
+                    int taskIndex = Integer.parseInt(taskIndexString);
+                    Aristo.handleUnmarkTask(taskIndex);
+                    break;
 
-                    case "delete":
-                        if (taskIndexString.isBlank()) {
-                            throw new AristoException("Please specify a task number to delete!\n");
-                        }
-                        int taskIndexInt = Integer.parseInt(taskIndexString);
-                        Aristo.handleDeleteTask(taskIndexInt);
-                        break;
+                case "delete":
+                    if (taskIndexString.isBlank()) {
+                        throw new AristoException("Please specify a task number to delete!\n");
+                    }
+                    int taskIndexInt = Integer.parseInt(taskIndexString);
+                    Aristo.handleDeleteTask(taskIndexInt);
+                    break;
 
-                    case "todo":
-                        Aristo.handleTodo(taskIndexString);
-                        break;
+                case "todo":
+                    Aristo.handleTodo(taskIndexString);
+                    break;
 
-                    case "deadline":
-                        Aristo.handleDeadline(taskIndexString);
-                        break;
+                case "deadline":
+                    Aristo.handleDeadline(taskIndexString);
+                    break;
 
-                    case "event":
-                        Aristo.handleEvent(taskIndexString);
-                        break;
+                case "event":
+                    Aristo.handleEvent(taskIndexString);
+                    break;
 
-                    default:
-                        throw new AristoException("Ehm, never heard of that command before!\n");
+                default:
+                    throw new AristoException("Ehm, never heard of that command before!\n");
                 }
             } catch (AristoException e) {
                 System.out.println(e.getMessage());
@@ -71,7 +70,7 @@ public class Aristo {
     }
 
     public static boolean isValidTaskNumber(int taskIndexInteger) {
-        return (taskIndexInteger > taskList.size() || taskIndexInteger < 1);
+        return (taskIndexInteger > tasks.size() || taskIndexInteger < 1);
     }
 
     public static void greet() {
@@ -90,11 +89,11 @@ public class Aristo {
     }
 
     public static void printTaskList() {
-        if (taskList.isEmpty()) {
+        if (tasks.isEmpty()) {
             System.out.println("There are no tasks in your list.");
         } else {
-            for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
-                Task currentTask = taskList.get(taskIndex);
+            for (int taskIndex = 0; taskIndex < tasks.size(); taskIndex++) {
+                Task currentTask = tasks.get(taskIndex);
                 System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
             }
         }
@@ -102,7 +101,7 @@ public class Aristo {
     }
 
     public static void printNumberOfTasks() {
-        if (taskList.size() == 1) {
+        if (tasks.size() == 1) {
             System.out.print("""
                 There is 1 task in your list now.
                 
@@ -111,7 +110,7 @@ public class Aristo {
             System.out.printf("""
                 There are %d tasks in your list now.
                 
-                """, taskList.size());
+                """, tasks.size());
         }
     }
 
@@ -124,7 +123,7 @@ public class Aristo {
     public static void handleMarkTask(int taskIndexInteger) throws AristoException {
         Aristo.checkIsValidTaskNumber(taskIndexInteger);
 
-        Task task = taskList.get(taskIndexInteger - 1);
+        Task task = tasks.get(taskIndexInteger - 1);
 
         if (task.isDone) {
             throw new AristoException("Task " + taskIndexInteger + " has already been marked as done.\n");
@@ -141,7 +140,7 @@ public class Aristo {
     public static void handleUnmarkTask(int taskIndexInteger) throws AristoException {
         Aristo.checkIsValidTaskNumber(taskIndexInteger);
 
-        Task task = taskList.get(taskIndexInteger - 1);
+        Task task = tasks.get(taskIndexInteger - 1);
 
         if (!task.isDone) {
             throw new AristoException("Task " + taskIndexInteger + " is already marked as not done.\n");
@@ -158,7 +157,7 @@ public class Aristo {
     public static void handleDeleteTask(int taskIndexInteger) throws AristoException {
         Aristo.checkIsValidTaskNumber(taskIndexInteger);
 
-        Task task = taskList.remove(taskIndexInteger - 1);
+        Task task = tasks.remove(taskIndexInteger - 1);
         System.out.printf("""
                 Okay, I have removed this task from your list:
                 %s
@@ -172,7 +171,7 @@ public class Aristo {
         }
 
         Todo todoTask = new Todo(description);
-        taskList.add(todoTask);
+        tasks.add(todoTask);
         System.out.printf("""
                 Noted, I have added this task to your list:
                 %s
@@ -187,7 +186,7 @@ public class Aristo {
         }
 
         Deadline deadlineTask = getDeadline(taskDetails);
-        taskList.add(deadlineTask);
+        tasks.add(deadlineTask);
         System.out.printf("""
                 Noted, I have added this task to your list:
                 %s
@@ -243,7 +242,7 @@ public class Aristo {
         }
 
         Event eventTask = new Event(description, from, to);
-        taskList.add(eventTask);
+        tasks.add(eventTask);
         System.out.printf("""
                 Noted, I have added this event to your list:
                 %s
