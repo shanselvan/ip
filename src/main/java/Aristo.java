@@ -1,32 +1,31 @@
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Represents the main chatbot application, Aristo, which manages the task list.
  */
 public class Aristo {
     private static final ArrayList<Task> tasks = new ArrayList<>();
+    private static final Ui ui = new Ui();
 
     public static void main(String[] args) {
         TaskStorage storage = new TaskStorage("./data/aristo.txt");
         tasks.addAll(storage.loadTasks());
 
-        Scanner scanner = new Scanner(System.in);
-        Aristo.greet();
-        String userInput = scanner.nextLine();
+        ui.greet();
+        String userInput = ui.fetchNextCommand();
 
         while (!userInput.equals("bye")) {
             try {
                 String[] parsedUserInput = userInput.split(" ", 2);
                 String command = parsedUserInput[0];
                 String taskIndexString = (parsedUserInput.length == 1)
-                                       ? ""
-                                       : parsedUserInput[1];
+                        ? ""
+                        : parsedUserInput[1];
 
                 switch (command) {
                 case "list":
-                    Aristo.printTaskList();
+                    ui.printTaskList(Aristo.tasks);
                     break;
 
                 case "mark":
@@ -73,58 +72,21 @@ public class Aristo {
             } catch (AristoException e) {
                 System.out.println(e.getMessage());
             }
-            userInput = scanner.nextLine();
+            userInput = ui.fetchNextCommand();
         }
-        Aristo.exit();
+        ui.exit();
     }
 
-    public static boolean isValidTaskNumber(int taskIndexInteger) {
+    public static boolean isInvalidTaskNumber(int taskIndexInteger) {
         return (taskIndexInteger > tasks.size() || taskIndexInteger < 1);
     }
 
-    public static void greet() {
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
-        System.out.println("Hello, human!");
-        System.out.println("Aristo here to assist. Fire away!");
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
-        System.out.println();
-    }
-
-    public static void exit() {
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
-        System.out.println("Goodbye!");
-        System.out.println("Aristo eagerly awaits your return...");
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
-    }
-
-    public static void printTaskList() {
-        if (tasks.isEmpty()) {
-            System.out.println("There are no tasks in your list.");
-        } else {
-            for (int taskIndex = 0; taskIndex < tasks.size(); taskIndex++) {
-                Task currentTask = tasks.get(taskIndex);
-                System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
-            }
-        }
-        System.out.println();
-    }
-
     public static void printNumberOfTasks() {
-        if (tasks.size() == 1) {
-            System.out.print("""
-                There is 1 task in your list now.
-                
-                """);
-        } else {
-            System.out.printf("""
-                There are %d tasks in your list now.
-                
-                """, tasks.size());
-        }
+        ui.printNumberOfTasks(Aristo.tasks);
     }
 
     public static void checkIsValidTaskNumber(int taskIndexInteger) throws AristoException {
-        if (isValidTaskNumber(taskIndexInteger)) {
+        if (isInvalidTaskNumber(taskIndexInteger)) {
             throw new AristoException("Invalid task number! Please retry with a valid task number.\n");
         }
     }
@@ -139,11 +101,7 @@ public class Aristo {
         }
 
         task.markAsDone();
-        System.out.printf("""
-                Great job! I have marked this task as done.
-                %s
-                
-                """, task);
+        ui.showTaskMarked(task);
     }
 
     public static void handleUnmarkTask(int taskIndexInteger) throws AristoException {
@@ -156,21 +114,14 @@ public class Aristo {
         }
 
         task.markAsNotDone();
-        System.out.printf("""
-                Alright, I have marked this task as not done yet.
-                %s
-                
-                """, task);
+        ui.showTaskUnmarked(task);
     }
 
     public static void handleDeleteTask(int taskIndexInteger) throws AristoException {
         Aristo.checkIsValidTaskNumber(taskIndexInteger);
 
         Task task = tasks.remove(taskIndexInteger - 1);
-        System.out.printf("""
-                Okay, I have removed this task from your list:
-                %s
-                """, task);
+        ui.showTaskDeleted(task);
         Aristo.printNumberOfTasks();
     }
 
@@ -181,10 +132,7 @@ public class Aristo {
 
         Todo todoTask = new Todo(description);
         tasks.add(todoTask);
-        System.out.printf("""
-                Noted, I have added this task to your list:
-                %s
-                """, todoTask);
+        ui.showTodoTaskAdded(todoTask);
         Aristo.printNumberOfTasks();
 
     }
@@ -196,10 +144,7 @@ public class Aristo {
 
         Deadline deadlineTask = getDeadline(taskDetails);
         tasks.add(deadlineTask);
-        System.out.printf("""
-                Noted, I have added this task to your list:
-                %s
-                """, deadlineTask);
+        ui.showDeadlineTaskAdded(deadlineTask);
         Aristo.printNumberOfTasks();
     }
 
@@ -260,10 +205,7 @@ public class Aristo {
         try {
             Event eventTask = new Event(description, from, to);
             tasks.add(eventTask);
-            System.out.printf("""
-                    Noted, I have added this event to your list:
-                    %s
-                    """, eventTask);
+            ui.showEventTaskAdded(eventTask);
             Aristo.printNumberOfTasks();
         } catch (DateTimeParseException e) {
             throw new AristoException("Please use yyyy-MM-dd format for dates!\n");

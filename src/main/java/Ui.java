@@ -60,4 +60,40 @@ public class Ui {
                 
                 """, task);
     }
+
+    public void showTaskUnmarked(Task task) {
+        System.out.printf("""
+                Alright, I have marked this task as not done yet.
+                %s
+                
+                """, task);
+    }
+
+    public void showTaskDeleted(Task task) {
+        System.out.printf("""
+                Okay, I have removed this task from your list:
+                %s
+                """, task);
+    }
+
+    public void showTodoTaskAdded(Todo todoTask) {
+        System.out.printf("""
+                Noted, I have added this task to your list:
+                %s
+                """, todoTask);
+    }
+
+    public void showDeadlineTaskAdded(Deadline deadlineTask) {
+        System.out.printf("""
+                Noted, I have added this task to your list:
+                %s
+                """, deadlineTask);
+    }
+
+    public void showEventTaskAdded(Event eventTask) {
+        System.out.printf("""
+                    Noted, I have added this event to your list:
+                    %s
+                    """, eventTask);
+    }
 }
