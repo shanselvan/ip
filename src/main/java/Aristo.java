@@ -70,7 +70,7 @@ public class Aristo {
                 storage.saveTasks(tasks);
 
             } catch (AristoException e) {
-                System.out.println(e.getMessage());
+                ui.showError(e.getMessage());
             }
             userInput = ui.fetchNextCommand();
         }

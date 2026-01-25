@@ -96,4 +96,8 @@ public class Ui {
                     %s
                     """, eventTask);
     }
+
+    public void showError(String errorMessage) {
+        System.out.println(errorMessage);
+    }
 }
