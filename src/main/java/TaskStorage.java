@@ -6,24 +6,26 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TaskStorage {
-    private Path filePath;
+    private final Path filePath;
 
     public TaskStorage(String filePath) {
         this.filePath = Paths.get(filePath);
+        try {
+            ensureDataFileExists();
+        } catch (IOException e) {
+            System.out.println("Failed to create data file! " + e.getMessage());
+        }
     }
 
     private void ensureDataFileExists() throws IOException {
-        try {
-            Path parentDir = filePath.getParent();
-            if (parentDir != null && !Files.exists(parentDir)) {
-                Files.createDirectories(parentDir);
-            }
+        Path parentDir = filePath.getParent();
 
-            if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-            }
-        } catch (IOException e) {
-            System.out.println("Could not initialise data file! " + e.getMessage());
+        if (!Files.exists(parentDir)) {
+            Files.createDirectories(parentDir);
+        }
+
+        if (!Files.exists(filePath)) {
+            Files.createFile(filePath);
         }
     }
 
@@ -37,7 +39,7 @@ public class TaskStorage {
                 boolean isDone = parts[1].equals("1");
                 String taskDescription = parts[2];
 
-                Task task;
+                Task task = null;
 
                 switch (taskType) {
 
@@ -51,17 +53,16 @@ public class TaskStorage {
                     break;
 
                 case "E":
-                    String from = parts[3];
-                    String to = parts[4];
+                    String from = (parts.length > 3) ? parts[3] : "";
+                    String to = (parts.length > 4) ? parts[4] : "";
                     task = new Event(taskDescription, from, to);
                     break;
 
                 default:
-                    continue;
-
+                    break;
                 }
 
-                if (isDone) {
+                if (task != null && isDone) {
                     task.markAsDone();
                 }
 
@@ -72,5 +73,17 @@ public class TaskStorage {
         }
 
         return loadedTasks;
+    }
+
+    public void saveTasks(ArrayList<Task> tasks) {
+        try {
+            ArrayList<String> lines = new ArrayList<>();
+            for (Task task : tasks) {
+                lines.add(task.toFileString());
+            }
+            Files.write(filePath, lines);
+        } catch (IOException e) {
+            System.out.println("Error writing to data file! " + e.getMessage());
+        }
     }
 }

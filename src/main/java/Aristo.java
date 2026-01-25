@@ -1,10 +1,16 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Represents the main chatbot application, Aristo, which manages the task list.
+ */
 public class Aristo {
     private static final ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
+        TaskStorage storage = new TaskStorage("./data/aristo.txt");
+        tasks.addAll(storage.loadTasks());
+
         Scanner scanner = new Scanner(System.in);
         Aristo.greet();
         String userInput = scanner.nextLine();
@@ -61,6 +67,8 @@ public class Aristo {
                 default:
                     throw new AristoException("Ehm, never heard of that command before!\n");
                 }
+                storage.saveTasks(tasks);
+
             } catch (AristoException e) {
                 System.out.println(e.getMessage());
             }
@@ -199,7 +207,10 @@ public class Aristo {
         String[] taskComponents = taskDetails.split(" /by ", 2);
 
         if (taskComponents.length != 2) {
-            throw new AristoException("Ensure you have included both the task description & deadline! e.g XXX /by YYY\n");
+            throw new AristoException("""
+                Ensure you have included both the task description & deadline! e.g XXX /by YYY\n
+                """
+            );
         }
         // System.out.println(Arrays.toString(taskComponents));
         String description = taskComponents[0];
