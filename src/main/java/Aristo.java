@@ -1,3 +1,4 @@
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -220,7 +221,11 @@ public class Aristo {
             throw new AristoException("Task description & deadline cannot be empty! Please try again.\n");
         }
 
-        return new Deadline(description, deadline);
+        try {
+            return new Deadline(description, deadline);
+        } catch (DateTimeParseException e) {
+            throw new AristoException("Invalid date format! Please enter a valid date in the format yyyy-MM-dd\n");
+        }
     }
 
     public static void handleEvent(String taskDetails) throws AristoException {
@@ -240,7 +245,7 @@ public class Aristo {
         String[] fromToComponents = fromAndTo.split(" /to ", 2);
 
         if (fromToComponents.length != 2) {
-            throw new AristoException("Have you included the from and to times? e.g XXX /from YYY /to ZZZ\n");
+            throw new AristoException("Have you included the from and to times? e.g XXX /from YYY /to ZZZ.\n");
         }
 
         String from = fromToComponents[0];
@@ -252,12 +257,16 @@ public class Aristo {
             throw new AristoException("Please specify a to time!\n");
         }
 
-        Event eventTask = new Event(description, from, to);
-        tasks.add(eventTask);
-        System.out.printf("""
-                Noted, I have added this event to your list:
-                %s
-                """, eventTask);
-        Aristo.printNumberOfTasks();
+        try {
+            Event eventTask = new Event(description, from, to);
+            tasks.add(eventTask);
+            System.out.printf("""
+                    Noted, I have added this event to your list:
+                    %s
+                    """, eventTask);
+            Aristo.printNumberOfTasks();
+        } catch (DateTimeParseException e) {
+            throw new AristoException("Please use yyyy-MM-dd format for dates!\n");
+        }
     }
 }
