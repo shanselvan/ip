@@ -257,12 +257,16 @@ public class Aristo {
             throw new AristoException("Please specify a to time!\n");
         }
 
-        Event eventTask = new Event(description, from, to);
-        tasks.add(eventTask);
-        System.out.printf("""
-                Noted, I have added this event to your list:
-                %s
-                """, eventTask);
-        Aristo.printNumberOfTasks();
+        try {
+            Event eventTask = new Event(description, from, to);
+            tasks.add(eventTask);
+            System.out.printf("""
+                    Noted, I have added this event to your list:
+                    %s
+                    """, eventTask);
+            Aristo.printNumberOfTasks();
+        } catch (DateTimeParseException e) {
+            throw new AristoException("Please use yyyy-MM-dd format for dates!\n");
+        }
     }
 }
