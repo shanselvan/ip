@@ -1,3 +1,5 @@
+package aristo.task;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -22,6 +24,10 @@ public abstract class Task {
     @Override
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
+    }
+
+    public boolean isDone() {
+        return isDone;
     }
 
     public abstract String toFileString();

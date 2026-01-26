@@ -1,3 +1,12 @@
+package aristo.ui;
+
+import aristo.exception.AristoException;
+import aristo.task.Deadline;
+import aristo.task.Event;
+import aristo.task.Task;
+import aristo.task.TaskList;
+import aristo.task.Todo;
+
 import java.util.Scanner;
 
 public class Ui {

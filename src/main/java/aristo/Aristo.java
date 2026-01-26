@@ -1,3 +1,15 @@
+package aristo;
+
+import aristo.exception.AristoException;
+import aristo.parser.Parser;
+import aristo.storage.TaskStorage;
+import aristo.task.Deadline;
+import aristo.task.Event;
+import aristo.task.Task;
+import aristo.task.TaskList;
+import aristo.task.Todo;
+import aristo.ui.Ui;
+
 import java.time.format.DateTimeParseException;
 
 /**
@@ -78,8 +90,8 @@ public class Aristo {
     public static void handleMarkTask(int taskIndexInteger) throws AristoException {
         Task task = taskList.getTask(taskIndexInteger);
 
-        if (task.isDone) {
-            throw new AristoException("Task " + taskIndexInteger + " has already been marked as done.\n");
+        if (task.isDone()) {
+            throw new AristoException("aristo.task.Task " + taskIndexInteger + " has already been marked as done.\n");
         }
 
         task.markAsDone();
@@ -89,8 +101,8 @@ public class Aristo {
     public static void handleUnmarkTask(int taskIndexInteger) throws AristoException {
         Task task = taskList.getTask(taskIndexInteger);
 
-        if (!task.isDone) {
-            throw new AristoException("Task " + taskIndexInteger + " is already marked as not done.\n");
+        if (!task.isDone()) {
+            throw new AristoException("aristo.task.Task " + taskIndexInteger + " is already marked as not done.\n");
         }
 
         task.markAsNotDone();
@@ -105,7 +117,7 @@ public class Aristo {
 
     public static void handleTodo(String description) throws AristoException {
         if (description.isBlank()) {
-            throw new AristoException("Task description is empty, please retry with a valid task description.\n");
+            throw new AristoException("aristo.task.Task description is empty, please retry with a valid task description.\n");
         }
 
         Todo todoTask = new Todo(description);

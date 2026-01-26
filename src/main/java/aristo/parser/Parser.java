@@ -1,3 +1,7 @@
+package aristo.parser;
+
+import aristo.exception.AristoException;
+
 public class Parser {
 
     public static String[] parseCommand(String userInput) {

@@ -1,3 +1,7 @@
+package aristo.task;
+
+import aristo.exception.AristoException;
+
 import java.util.ArrayList;
 
 public class TaskList {
