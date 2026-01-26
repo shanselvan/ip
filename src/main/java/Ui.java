@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
@@ -23,20 +22,21 @@ public class Ui {
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
     }
 
-    public void printTaskList(ArrayList<Task> tasks) {
-        if (tasks.isEmpty()) {
+    public void printTaskList(TaskList taskList) throws AristoException {
+        if (taskList.isEmpty()) {
             System.out.println("There are no tasks in your list.");
         } else {
-            for (int taskIndex = 0; taskIndex < tasks.size(); taskIndex++) {
-                Task currentTask = tasks.get(taskIndex);
+            for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
+                Task currentTask = taskList.getTask(taskIndex + 1);
                 System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
             }
         }
         System.out.println();
     }
 
-    public void printNumberOfTasks(ArrayList<Task> tasks) {
-        if (tasks.size() == 1) {
+    public void printNumberOfTasks(TaskList taskList) {
+        int size = taskList.size();
+        if (size == 1) {
             System.out.print("""
                 There is 1 task in your list now.
                 
@@ -45,7 +45,7 @@ public class Ui {
             System.out.printf("""
                 There are %d tasks in your list now.
                 
-                """, tasks.size());
+                """, size);
         }
     }
 

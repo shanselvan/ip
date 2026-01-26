@@ -75,8 +75,9 @@ public class TaskStorage {
         return loadedTasks;
     }
 
-    public void saveTasks(ArrayList<Task> tasks) {
+    public void saveTasks(TaskList taskList) {
         try {
+            ArrayList<Task> tasks = taskList.asList();
             ArrayList<String> lines = new ArrayList<>();
             for (Task task : tasks) {
                 lines.add(task.toFileString());

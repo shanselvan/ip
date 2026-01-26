@@ -1,16 +1,15 @@
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 /**
  * Represents the main chatbot application, Aristo, which manages the task list.
  */
 public class Aristo {
-    private static final ArrayList<Task> tasks = new ArrayList<>();
+    private static TaskList taskList;
     private static final Ui ui = new Ui();
 
     public static void main(String[] args) {
         TaskStorage storage = new TaskStorage("./data/aristo.txt");
-        tasks.addAll(storage.loadTasks());
+        taskList = new TaskList(storage.loadTasks());
 
         ui.greet();
         String userInput = ui.fetchNextCommand();
@@ -23,7 +22,7 @@ public class Aristo {
 
                 switch (command) {
                 case "list":
-                    ui.printTaskList(Aristo.tasks);
+                    ui.printTaskList(taskList);
                     break;
 
                 case "mark":
@@ -62,7 +61,7 @@ public class Aristo {
                 default:
                     throw new AristoException("Ehm, never heard of that command before!\n");
                 }
-                storage.saveTasks(tasks);
+                storage.saveTasks(taskList);
 
             } catch (AristoException e) {
                 ui.showError(e.getMessage());
@@ -72,24 +71,12 @@ public class Aristo {
         ui.exit();
     }
 
-    public static boolean isInvalidTaskNumber(int taskIndexInteger) {
-        return (taskIndexInteger > tasks.size() || taskIndexInteger < 1);
-    }
-
     public static void printNumberOfTasks() {
-        ui.printNumberOfTasks(Aristo.tasks);
-    }
-
-    public static void checkIsValidTaskNumber(int taskIndexInteger) throws AristoException {
-        if (isInvalidTaskNumber(taskIndexInteger)) {
-            throw new AristoException("Invalid task number! Please retry with a valid task number.\n");
-        }
+        ui.printNumberOfTasks(taskList);
     }
 
     public static void handleMarkTask(int taskIndexInteger) throws AristoException {
-        Aristo.checkIsValidTaskNumber(taskIndexInteger);
-
-        Task task = tasks.get(taskIndexInteger - 1);
+        Task task = taskList.getTask(taskIndexInteger);
 
         if (task.isDone) {
             throw new AristoException("Task " + taskIndexInteger + " has already been marked as done.\n");
@@ -100,9 +87,7 @@ public class Aristo {
     }
 
     public static void handleUnmarkTask(int taskIndexInteger) throws AristoException {
-        Aristo.checkIsValidTaskNumber(taskIndexInteger);
-
-        Task task = tasks.get(taskIndexInteger - 1);
+        Task task = taskList.getTask(taskIndexInteger);
 
         if (!task.isDone) {
             throw new AristoException("Task " + taskIndexInteger + " is already marked as not done.\n");
@@ -113,9 +98,7 @@ public class Aristo {
     }
 
     public static void handleDeleteTask(int taskIndexInteger) throws AristoException {
-        Aristo.checkIsValidTaskNumber(taskIndexInteger);
-
-        Task task = tasks.remove(taskIndexInteger - 1);
+        Task task = taskList.removeTask(taskIndexInteger);
         ui.showTaskDeleted(task);
         Aristo.printNumberOfTasks();
     }
@@ -126,7 +109,7 @@ public class Aristo {
         }
 
         Todo todoTask = new Todo(description);
-        tasks.add(todoTask);
+        taskList.addTask(todoTask);
         ui.showTodoTaskAdded(todoTask);
         Aristo.printNumberOfTasks();
 
@@ -138,7 +121,7 @@ public class Aristo {
         }
 
         Deadline deadlineTask = getDeadline(taskDetails);
-        tasks.add(deadlineTask);
+        taskList.addTask(deadlineTask);
         ui.showDeadlineTaskAdded(deadlineTask);
         Aristo.printNumberOfTasks();
     }
@@ -170,7 +153,7 @@ public class Aristo {
 
         try {
             Event eventTask = new Event(description, from, to);
-            tasks.add(eventTask);
+            taskList.addTask(eventTask);
             ui.showEventTaskAdded(eventTask);
             Aristo.printNumberOfTasks();
         } catch (DateTimeParseException e) {
