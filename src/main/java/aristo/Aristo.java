@@ -91,7 +91,7 @@ public class Aristo {
         Task task = taskList.getTask(taskIndexInteger);
 
         if (task.isDone()) {
-            throw new AristoException("aristo.task.Task " + taskIndexInteger + " has already been marked as done.\n");
+            throw new AristoException("Task " + taskIndexInteger + " has already been marked as done.\n");
         }
 
         task.markAsDone();
@@ -102,7 +102,7 @@ public class Aristo {
         Task task = taskList.getTask(taskIndexInteger);
 
         if (!task.isDone()) {
-            throw new AristoException("aristo.task.Task " + taskIndexInteger + " is already marked as not done.\n");
+            throw new AristoException("Task " + taskIndexInteger + " is already marked as not done.\n");
         }
 
         task.markAsNotDone();
@@ -117,7 +117,7 @@ public class Aristo {
 
     public static void handleTodo(String description) throws AristoException {
         if (description.isBlank()) {
-            throw new AristoException("aristo.task.Task description is empty, please retry with a valid task description.\n");
+            throw new AristoException("Task description is empty, please retry with a valid task description.\n");
         }
 
         Todo todoTask = new Todo(description);
