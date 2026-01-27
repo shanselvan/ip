@@ -3,6 +3,11 @@ package aristo.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a <code>Deadline</code> task in the Aristo task list.
+ * <p>
+ * A <code>Deadline</code> task contains a description and a deadline date.
+ */
 public class Deadline extends Task {
     protected LocalDate by;
     private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -13,11 +18,17 @@ public class Deadline extends Task {
         this.by = LocalDate.parse(by, INPUT_FORMATTER);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by.format(OUTPUT_FORMATTER) + ")";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toFileString() {
         int isDone = this.isDone ? 1 : 0;

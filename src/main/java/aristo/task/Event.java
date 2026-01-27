@@ -3,6 +3,11 @@ package aristo.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents an <code>Event</code> task in the Aristo task list.
+ * <p>
+ * An <code>Event</code> task contains a description, start time and end time.
+ */
 public class Event extends Task {
     protected LocalDate from;
     protected LocalDate to;
@@ -15,12 +20,18 @@ public class Event extends Task {
         this.to = LocalDate.parse(to, INPUT_FORMATTER);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + from.format(OUTPUT_FORMATTER) +
                 " to: " + to.format(OUTPUT_FORMATTER) + ")";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toFileString() {
         int isDone = this.isDone ? 1 : 0;
