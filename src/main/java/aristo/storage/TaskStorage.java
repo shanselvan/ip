@@ -1,17 +1,17 @@
 package aristo.storage;
 
-import aristo.task.Deadline;
-import aristo.task.Event;
-import aristo.task.Task;
-import aristo.task.TaskList;
-import aristo.task.Todo;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import aristo.task.Deadline;
+import aristo.task.Event;
+import aristo.task.Task;
+import aristo.task.TaskList;
+import aristo.task.Todo;
 
 public class TaskStorage {
     private final Path filePath;

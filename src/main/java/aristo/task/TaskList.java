@@ -1,8 +1,8 @@
 package aristo.task;
 
-import aristo.exception.AristoException;
-
 import java.util.ArrayList;
+
+import aristo.exception.AristoException;
 
 public class TaskList {
     private final ArrayList<Task> tasks;

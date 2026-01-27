@@ -1,5 +1,7 @@
 package aristo;
 
+import java.time.format.DateTimeParseException;
+
 import aristo.exception.AristoException;
 import aristo.parser.Parser;
 import aristo.storage.TaskStorage;
@@ -9,8 +11,6 @@ import aristo.task.Task;
 import aristo.task.TaskList;
 import aristo.task.Todo;
 import aristo.ui.Ui;
-
-import java.time.format.DateTimeParseException;
 
 /**
  * Represents the main chatbot application, Aristo, which manages the task list.
