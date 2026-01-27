@@ -19,6 +19,13 @@ public class Aristo {
     private static TaskList taskList;
     private static final Ui ui = new Ui();
 
+    /**
+     * The main entry point of the Aristo chatbot application.
+     * Initializes storage and task list, greets the user, and enters the command loop.
+     * Processes commands until the user types "bye", after which the application exits.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         TaskStorage storage = new TaskStorage("./data/aristo.txt");
         taskList = new TaskList(storage.loadTasks());

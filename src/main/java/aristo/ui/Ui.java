@@ -18,6 +18,9 @@ import java.util.Scanner;
 public class Ui {
     private final Scanner scanner;
 
+    /**
+     * Constructs an Ui object and initializes the input scanner.
+     */
     public Ui() {
         scanner = new Scanner(System.in);
     }

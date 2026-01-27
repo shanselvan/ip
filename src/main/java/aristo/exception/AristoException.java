@@ -8,6 +8,11 @@ package aristo.exception;
  */
 public class AristoException extends Exception {
 
+    /**
+     * Constructs a new AristoException with the specified message.
+     *
+     * @param message the detail message for this exception
+     */
     public AristoException(String message) {
         super(message);
     }

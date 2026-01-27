@@ -12,6 +12,11 @@ import java.util.ArrayList;
 public class TaskList {
     private final ArrayList<Task> tasks;
 
+    /**
+     * Constructs a TaskList containing the given tasks.
+     *
+     * @param tasks the list of tasks to initialize the TaskList with
+     */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
     }

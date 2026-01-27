@@ -14,6 +14,13 @@ public class Event extends Task {
     private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
+    /**
+     * Constructs an Event task with a description, start date, and end date.
+     *
+     * @param description the description of the event
+     * @param from the start date of the event in the format "yyyy-MM-dd"
+     * @param to the end date of the event in the format "yyyy-MM-dd"
+     */
     public Event(String description, String from, String to) {
         super(description);
         this.from = LocalDate.parse(from, INPUT_FORMATTER);

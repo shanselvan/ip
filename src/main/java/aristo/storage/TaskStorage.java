@@ -23,8 +23,15 @@ import java.util.Scanner;
 public class TaskStorage {
     private final Path filePath;
 
+    /**
+     * Constructs a TaskStorage object for the given file path.
+     * Ensures that the data file and its parent directories exist.
+     *
+     * @param filePath the path to the storage file
+     */
     public TaskStorage(String filePath) {
         this.filePath = Paths.get(filePath);
+
         try {
             ensureDataFileExists();
         } catch (IOException e) {
