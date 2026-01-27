@@ -13,6 +13,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles loading and saving of tasks to a storage file.
+ * <p>
+ * This class is responsible for reading tasks from a file into memory
+ * and saving tasks from memory back to the file. It ensures the data
+ * file exists and can create directories as needed.
+ */
 public class TaskStorage {
     private final Path filePath;
 
@@ -25,6 +32,16 @@ public class TaskStorage {
         }
     }
 
+    /**
+     * Ensures that the data file used for storing tasks exists.
+     * <p>
+     * This method checks if the file at {@link #filePath} exists.
+     * If the file does not exist, it creates the necessary directories
+     * and an empty file.
+     * </p>
+     *
+     * @throws IOException if an I/O error occurs while creating the directories or file.
+     */
     private void ensureDataFileExists() throws IOException {
         Path parentDir = filePath.getParent();
 
@@ -37,6 +54,15 @@ public class TaskStorage {
         }
     }
 
+    /**
+     * Loads tasks from the storage file into a list of <code>Task</code> objects.
+     * <p>
+     * Tasks are parsed according to their type: <code>Todo</code>, <code>Deadline</code> or <code>Event</code>.
+     * Completed tasks are marked as done.
+     * </p>
+     *
+     * @return List of tasks loaded from the file.
+     */
     public ArrayList<Task> loadTasks() {
         ArrayList<Task> loadedTasks = new ArrayList<>();
         try (Scanner scanner = new Scanner(filePath)) {
@@ -83,6 +109,14 @@ public class TaskStorage {
         return loadedTasks;
     }
 
+    /**
+     * Saves the given task list into the storage file.
+     * <p>
+     * Each Task is converted to its file string representation before writing to the file.
+     * </p>
+     *
+     * @param taskList TaskList containing the tasks to be saved.
+     */
     public void saveTasks(TaskList taskList) {
         try {
             ArrayList<Task> tasks = taskList.asList();
