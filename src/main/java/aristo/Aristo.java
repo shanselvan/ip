@@ -83,10 +83,20 @@ public class Aristo {
         ui.exit();
     }
 
+    /**
+     * Displays the number of tasks currently in the task list.
+     */
     public static void printNumberOfTasks() {
         ui.printNumberOfTasks(taskList);
     }
 
+
+    /**
+     * Marks the specified task as done.
+     *
+     * @param taskIndexInteger 1-based index of the task to mark.
+     * @throws AristoException If the task is already marked as done or index is invalid.
+     */
     public static void handleMarkTask(int taskIndexInteger) throws AristoException {
         Task task = taskList.getTask(taskIndexInteger);
 
@@ -98,6 +108,12 @@ public class Aristo {
         ui.showTaskMarked(task);
     }
 
+    /**
+     * Marks the specified task as not done.
+     *
+     * @param taskIndexInteger 1-based index of the task to unmark.
+     * @throws AristoException If the task is already not done or index is invalid.
+     */
     public static void handleUnmarkTask(int taskIndexInteger) throws AristoException {
         Task task = taskList.getTask(taskIndexInteger);
 
@@ -109,12 +125,24 @@ public class Aristo {
         ui.showTaskUnmarked(task);
     }
 
+    /**
+     * Deletes the specified task from the task list.
+     *
+     * @param taskIndexInteger 1-based index of the task to delete.
+     * @throws AristoException If the task index is invalid.
+     */
     public static void handleDeleteTask(int taskIndexInteger) throws AristoException {
         Task task = taskList.removeTask(taskIndexInteger);
         ui.showTaskDeleted(task);
         Aristo.printNumberOfTasks();
     }
 
+    /**
+     * Adds a new todo task to the task list.
+     *
+     * @param description Description of the todo task.
+     * @throws AristoException If the description is blank.
+     */
     public static void handleTodo(String description) throws AristoException {
         if (description.isBlank()) {
             throw new AristoException("Task description is empty, please retry with a valid task description.\n");
@@ -127,6 +155,12 @@ public class Aristo {
 
     }
 
+    /**
+     * Adds a new deadline task to the task list.
+     *
+     * @param taskDetails Description and deadline (format: "DESCRIPTION /by DEADLINE").
+     * @throws AristoException If input is blank or deadline format is invalid.
+     */
     public static void handleDeadline(String taskDetails) throws AristoException {
         if (taskDetails.isBlank()) {
             throw new AristoException("Please provide a task description and its deadline! e.g XXX /by YYY\n");
@@ -138,6 +172,13 @@ public class Aristo {
         Aristo.printNumberOfTasks();
     }
 
+    /**
+     * Parses and returns a <code>Deadline</code> task from input string.
+     *
+     * @param taskDetails Input string containing description and deadline.
+     * @return Deadline task object.
+     * @throws AristoException If date format is invalid.
+     */
     private static Deadline getDeadline(String taskDetails) throws AristoException {
         String[] taskComponents = Parser.parseDeadline(taskDetails);
 
@@ -151,6 +192,12 @@ public class Aristo {
         }
     }
 
+    /**
+     * Adds a new <code>Event</code> task to the task list.
+     *
+     * @param taskDetails Description, start and end times (format: "DESCRIPTION /from START /to END").
+     * @throws AristoException If input is missing description or times, or has invalid date format.
+     */
     public static void handleEvent(String taskDetails) throws AristoException {
         String[] taskComponents = Parser.parseEvent(taskDetails);
         String description = taskComponents[0];
