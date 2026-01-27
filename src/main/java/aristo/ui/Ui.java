@@ -40,6 +40,7 @@ public class Ui {
                 System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
             }
         }
+
         System.out.println();
     }
 
@@ -64,46 +65,46 @@ public class Ui {
 
     public void showTaskMarked(Task task) {
         System.out.printf("""
-                Great job! I have marked this task as done.
-                %s
-                
-                """, task);
+            Great job! I have marked this task as done.
+            %s
+            
+            """, task);
     }
 
     public void showTaskUnmarked(Task task) {
         System.out.printf("""
-                Alright, I have marked this task as not done yet.
-                %s
-                
-                """, task);
+            Alright, I have marked this task as not done yet.
+            %s
+            
+            """, task);
     }
 
     public void showTaskDeleted(Task task) {
         System.out.printf("""
-                Okay, I have removed this task from your list:
-                %s
-                """, task);
+            Okay, I have removed this task from your list:
+            %s
+            """, task);
     }
 
     public void showTodoTaskAdded(Todo todoTask) {
         System.out.printf("""
-                Noted, I have added this task to your list:
-                %s
-                """, todoTask);
+            Noted, I have added this task to your list:
+            %s
+            """, todoTask);
     }
 
     public void showDeadlineTaskAdded(Deadline deadlineTask) {
         System.out.printf("""
-                Noted, I have added this task to your list:
-                %s
-                """, deadlineTask);
+            Noted, I have added this task to your list:
+            %s
+            """, deadlineTask);
     }
 
     public void showEventTaskAdded(Event eventTask) {
         System.out.printf("""
-                    Noted, I have added this event to your list:
-                    %s
-                    """, eventTask);
+            Noted, I have added this event to your list:
+            %s
+            """, eventTask);
     }
 
     public void showError(String errorMessage) {

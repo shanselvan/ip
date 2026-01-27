@@ -19,17 +19,19 @@ public class TaskList {
         this.tasks.add(task);
     }
 
-    public Task removeTask(int index) throws AristoException {
-        if (index > tasks.size() || index < 1) {
+    private void validateIndex(int index) throws AristoException {
+        if (index < 1 || index > tasks.size()) {
             throw new AristoException("Invalid task number! Please retry with a valid task number.\n");
         }
+    }
+
+    public Task removeTask(int index) throws AristoException {
+        validateIndex(index);
         return tasks.remove(index - 1);
     }
 
     public Task getTask(int index) throws AristoException {
-        if (index > tasks.size() || index < 1) {
-            throw new AristoException("Invalid task number! Please retry with a valid task number.\n");
-        }
+        validateIndex(index);
         return tasks.get(index - 1);
     }
 

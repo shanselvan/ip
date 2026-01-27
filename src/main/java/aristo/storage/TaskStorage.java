@@ -18,6 +18,7 @@ public class TaskStorage {
 
     public TaskStorage(String filePath) {
         this.filePath = Paths.get(filePath);
+
         try {
             ensureDataFileExists();
         } catch (IOException e) {
@@ -39,10 +40,12 @@ public class TaskStorage {
 
     public ArrayList<Task> loadTasks() {
         ArrayList<Task> loadedTasks = new ArrayList<>();
+
         try (Scanner scanner = new Scanner(filePath)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split(" \\| ");
+
                 String taskType = parts[0];
                 boolean isDone = parts[1].equals("1");
                 String taskDescription = parts[2];
@@ -50,7 +53,6 @@ public class TaskStorage {
                 Task task = null;
 
                 switch (taskType) {
-
                 case "T":
                     task = new Todo(taskDescription);
                     break;
@@ -87,9 +89,11 @@ public class TaskStorage {
         try {
             ArrayList<Task> tasks = taskList.asList();
             ArrayList<String> lines = new ArrayList<>();
+
             for (Task task : tasks) {
                 lines.add(task.toFileString());
             }
+
             Files.write(filePath, lines);
         } catch (IOException e) {
             System.out.println("Error writing to data file! " + e.getMessage());

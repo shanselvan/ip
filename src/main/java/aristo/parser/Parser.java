@@ -7,6 +7,7 @@ public class Parser {
     public static String[] parseCommand(String userInput) {
         String[] parsedUserInput = userInput.split(" ", 2);
         String command = parsedUserInput[0];
+
         String taskIndexString = (parsedUserInput.length == 1)
                 ? ""
                 : parsedUserInput[1];
