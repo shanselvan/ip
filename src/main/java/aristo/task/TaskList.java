@@ -7,6 +7,10 @@ import java.util.ArrayList;
 public class TaskList {
     private final ArrayList<Task> tasks;
 
+    public TaskList() {
+        this.tasks = new ArrayList<>();
+    }
+
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
     }
@@ -39,5 +43,19 @@ public class TaskList {
 
     public boolean isEmpty() {
         return tasks.isEmpty();
+    }
+
+    public TaskList find(String keyword) throws AristoException {
+        TaskList matches = new TaskList();
+
+        for (int i = 1; i <= this.size(); i++) {
+            Task task = this.getTask(i);
+
+            if (task.getDescription().contains(keyword)) {
+                matches.addTask(task);
+            }
+        }
+
+        return matches;
     }
 }
