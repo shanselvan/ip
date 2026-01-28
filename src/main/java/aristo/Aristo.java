@@ -1,5 +1,7 @@
 package aristo;
 
+import java.time.format.DateTimeParseException;
+
 import aristo.exception.AristoException;
 import aristo.parser.Parser;
 import aristo.storage.TaskStorage;
@@ -10,14 +12,22 @@ import aristo.task.TaskList;
 import aristo.task.Todo;
 import aristo.ui.Ui;
 
-import java.time.format.DateTimeParseException;
-
 /**
  * Represents the main chatbot application, Aristo, which manages the task list.
  */
 public class Aristo {
     private static TaskList taskList;
     private static final Ui ui = new Ui();
+
+    private static final String COMMAND_LIST = "list";
+    private static final String COMMAND_MARK = "mark";
+    private static final String COMMAND_UNMARK = "unmark";
+    private static final String COMMAND_DELETE = "delete";
+    private static final String COMMAND_TODO = "todo";
+    private static final String COMMAND_DEADLINE = "deadline";
+    private static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_BYE = "bye";
+
 
     /**
      * The main entry point of the Aristo chatbot application.
@@ -33,47 +43,49 @@ public class Aristo {
         ui.greet();
         String userInput = ui.fetchNextCommand();
 
-        while (!userInput.equals("bye")) {
+        while (!userInput.equals(COMMAND_BYE)) {
             try {
                 String[] parsed = Parser.parseCommand(userInput);
                 String command = parsed[0];
                 String taskIndexString = parsed[1];
 
                 switch (command) {
-                case "list":
+                case COMMAND_LIST:
                     ui.printTaskList(taskList);
                     break;
 
-                case "mark":
+                case COMMAND_MARK:
                     int taskIndexInteger = Parser.parseTaskIndex(taskIndexString);
                     Aristo.handleMarkTask(taskIndexInteger);
                     break;
 
-                case "unmark":
+                case COMMAND_UNMARK:
                     if (taskIndexString.isBlank()) {
                         throw new AristoException("Please specify a task number to unmark!\n");
                     }
+
                     int taskIndex = Integer.parseInt(taskIndexString);
                     Aristo.handleUnmarkTask(taskIndex);
                     break;
 
-                case "delete":
+                case COMMAND_DELETE:
                     if (taskIndexString.isBlank()) {
                         throw new AristoException("Please specify a task number to delete!\n");
                     }
+
                     int taskIndexInt = Integer.parseInt(taskIndexString);
                     Aristo.handleDeleteTask(taskIndexInt);
                     break;
 
-                case "todo":
+                case COMMAND_TODO:
                     Aristo.handleTodo(taskIndexString);
                     break;
 
-                case "deadline":
+                case COMMAND_DEADLINE:
                     Aristo.handleDeadline(taskIndexString);
                     break;
 
-                case "event":
+                case COMMAND_EVENT:
                     Aristo.handleEvent(taskIndexString);
                     break;
 
@@ -85,8 +97,10 @@ public class Aristo {
             } catch (AristoException e) {
                 ui.showError(e.getMessage());
             }
+
             userInput = ui.fetchNextCommand();
         }
+
         ui.exit();
     }
 
@@ -159,7 +173,6 @@ public class Aristo {
         taskList.addTask(todoTask);
         ui.showTodoTaskAdded(todoTask);
         Aristo.printNumberOfTasks();
-
     }
 
     /**

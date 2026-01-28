@@ -1,17 +1,17 @@
 package aristo.storage;
 
-import aristo.task.Deadline;
-import aristo.task.Event;
-import aristo.task.Task;
-import aristo.task.TaskList;
-import aristo.task.Todo;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import aristo.task.Deadline;
+import aristo.task.Event;
+import aristo.task.Task;
+import aristo.task.TaskList;
+import aristo.task.Todo;
 
 /**
  * Handles loading and saving of tasks to a storage file.
@@ -20,6 +20,7 @@ import java.util.Scanner;
  * and saving tasks from memory back to the file. It ensures the data
  * file exists and can create directories as needed.
  */
+
 public class TaskStorage {
     private final Path filePath;
 
@@ -72,10 +73,12 @@ public class TaskStorage {
      */
     public ArrayList<Task> loadTasks() {
         ArrayList<Task> loadedTasks = new ArrayList<>();
+
         try (Scanner scanner = new Scanner(filePath)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split(" \\| ");
+
                 String taskType = parts[0];
                 boolean isDone = parts[1].equals("1");
                 String taskDescription = parts[2];
@@ -83,7 +86,6 @@ public class TaskStorage {
                 Task task = null;
 
                 switch (taskType) {
-
                 case "T":
                     task = new Todo(taskDescription);
                     break;
@@ -128,9 +130,11 @@ public class TaskStorage {
         try {
             ArrayList<Task> tasks = taskList.asList();
             ArrayList<String> lines = new ArrayList<>();
+
             for (Task task : tasks) {
                 lines.add(task.toFileString());
             }
+
             Files.write(filePath, lines);
         } catch (IOException e) {
             System.out.println("Error writing to data file! " + e.getMessage());

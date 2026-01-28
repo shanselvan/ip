@@ -1,13 +1,13 @@
 package aristo.ui;
 
+import java.util.Scanner;
+
 import aristo.exception.AristoException;
 import aristo.task.Deadline;
 import aristo.task.Event;
 import aristo.task.Task;
 import aristo.task.TaskList;
 import aristo.task.Todo;
-
-import java.util.Scanner;
 
 /**
  * Handles all user interaction for the Aristo chatbot.
@@ -61,6 +61,7 @@ public class Ui {
                 System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
             }
         }
+
         System.out.println();
     }
 
@@ -97,10 +98,10 @@ public class Ui {
      */
     public void showTaskMarked(Task task) {
         System.out.printf("""
-                Great job! I have marked this task as done.
-                %s
-                
-                """, task);
+            Great job! I have marked this task as done.
+            %s
+            
+            """, task);
     }
 
     /**
@@ -108,10 +109,10 @@ public class Ui {
      */
     public void showTaskUnmarked(Task task) {
         System.out.printf("""
-                Alright, I have marked this task as not done yet.
-                %s
-                
-                """, task);
+            Alright, I have marked this task as not done yet.
+            %s
+            
+            """, task);
     }
 
     /**
@@ -119,9 +120,9 @@ public class Ui {
      */
     public void showTaskDeleted(Task task) {
         System.out.printf("""
-                Okay, I have removed this task from your list:
-                %s
-                """, task);
+            Okay, I have removed this task from your list:
+            %s
+            """, task);
     }
 
     /**
@@ -129,9 +130,9 @@ public class Ui {
      */
     public void showTodoTaskAdded(Todo todoTask) {
         System.out.printf("""
-                Noted, I have added this task to your list:
-                %s
-                """, todoTask);
+            Noted, I have added this task to your list:
+            %s
+            """, todoTask);
     }
 
     /**
@@ -139,9 +140,9 @@ public class Ui {
      */
     public void showDeadlineTaskAdded(Deadline deadlineTask) {
         System.out.printf("""
-                Noted, I have added this task to your list:
-                %s
-                """, deadlineTask);
+            Noted, I have added this task to your list:
+            %s
+            """, deadlineTask);
     }
 
     /**
@@ -149,9 +150,9 @@ public class Ui {
      */
     public void showEventTaskAdded(Event eventTask) {
         System.out.printf("""
-                    Noted, I have added this event to your list:
-                    %s
-                    """, eventTask);
+            Noted, I have added this event to your list:
+            %s
+            """, eventTask);
     }
 
     /**

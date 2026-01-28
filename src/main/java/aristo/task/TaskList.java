@@ -1,8 +1,8 @@
 package aristo.task;
 
-import aristo.exception.AristoException;
-
 import java.util.ArrayList;
+
+import aristo.exception.AristoException;
 
 /**
  * Represents a list of tasks in the Aristo chatbot.
@@ -35,6 +35,12 @@ public class TaskList {
         this.tasks.add(task);
     }
 
+    private void validateIndex(int index) throws AristoException {
+        if (index < 1 || index > tasks.size()) {
+            throw new AristoException("Invalid task number! Please retry with a valid task number.\n");
+        }
+    }
+
     /**
      * Removes and returns the task at the given index.
      *
@@ -43,9 +49,7 @@ public class TaskList {
      * @throws AristoException If the given index is invalid.
      */
     public Task removeTask(int index) throws AristoException {
-        if (index > tasks.size() || index < 1) {
-            throw new AristoException("Invalid task number! Please retry with a valid task number.\n");
-        }
+        validateIndex(index);
         return tasks.remove(index - 1);
     }
 
@@ -57,9 +61,7 @@ public class TaskList {
      * @throws AristoException If the given index is invalid.
      */
     public Task getTask(int index) throws AristoException {
-        if (index > tasks.size() || index < 1) {
-            throw new AristoException("Invalid task number! Please retry with a valid task number.\n");
-        }
+        validateIndex(index);
         return tasks.get(index - 1);
     }
 
