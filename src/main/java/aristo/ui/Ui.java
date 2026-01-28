@@ -33,14 +33,27 @@ public class Ui {
 
     public void printTaskList(TaskList taskList) throws AristoException {
         if (taskList.isEmpty()) {
-            System.out.println("There are no tasks in your list.");
+            System.out.println("There are no tasks in your list.\n");
         } else {
             for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
                 Task currentTask = taskList.getTask(taskIndex + 1);
                 System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
             }
+            System.out.println();
         }
-        System.out.println();
+    }
+
+    public void printMatchingTasks(TaskList tasks) throws AristoException {
+        if (tasks.isEmpty()) {
+            System.out.println("There are no tasks matching that keyword.\n");
+        } else {
+            System.out.println("Here are the matching tasks in your list:");
+
+            for (int i = 1; i <= tasks.size(); i++) {
+                System.out.println(i + "." + tasks.getTask(i));
+            }
+            System.out.println();
+        }
     }
 
     public void printNumberOfTasks(TaskList taskList) {
