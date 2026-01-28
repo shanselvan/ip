@@ -58,6 +58,13 @@ public abstract class Task {
     }
 
     /**
+     * Returns the description for this task.
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
      * Returns a string representation of this task for file storage.
      */
     public abstract String toFileString();

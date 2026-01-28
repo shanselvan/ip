@@ -54,15 +54,36 @@ public class Ui {
      */
     public void printTaskList(TaskList taskList) throws AristoException {
         if (taskList.isEmpty()) {
-            System.out.println("There are no tasks in your list.");
+            System.out.println("There are no tasks in your list.\n");
         } else {
             for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
                 Task currentTask = taskList.getTask(taskIndex + 1);
                 System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
             }
+            System.out.println();
         }
+    }
 
-        System.out.println();
+    /**
+     * Prints all tasks from the given {@link TaskList} that match a certain keyword.
+     * <p>
+     * If the task list is empty, prints a message indicating that no tasks match.
+     * Otherwise, prints the tasks in a numbered list.
+     *
+     * @param tasks the {@link TaskList} containing the matching tasks to print.
+     * @throws AristoException if an error occurs while accessing the tasks
+     */
+    public void printMatchingTasks(TaskList tasks) throws AristoException {
+        if (tasks.isEmpty()) {
+            System.out.println("There are no tasks matching that keyword.\n");
+        } else {
+            System.out.println("Here are the matching tasks in your list:");
+
+            for (int i = 1; i <= tasks.size(); i++) {
+                System.out.println(i + "." + tasks.getTask(i));
+            }
+            System.out.println();
+        }
     }
 
     /**

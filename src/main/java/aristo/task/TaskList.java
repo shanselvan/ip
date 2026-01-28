@@ -13,6 +13,13 @@ public class TaskList {
     private final ArrayList<Task> tasks;
 
     /**
+     * Constructs a TaskList with an empty list.
+     */
+    public TaskList() {
+        this.tasks = new ArrayList<>();
+    }
+
+    /**
      * Constructs a TaskList containing the given tasks.
      *
      * @param tasks the list of tasks to initialize the TaskList with
@@ -77,5 +84,19 @@ public class TaskList {
      */
     public boolean isEmpty() {
         return tasks.isEmpty();
+    }
+
+    public TaskList find(String keyword) throws AristoException {
+        TaskList matches = new TaskList();
+
+        for (int i = 1; i <= this.size(); i++) {
+            Task task = this.getTask(i);
+
+            if (task.getDescription().contains(keyword)) {
+                matches.addTask(task);
+            }
+        }
+
+        return matches;
     }
 }

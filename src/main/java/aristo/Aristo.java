@@ -89,6 +89,15 @@ public class Aristo {
                     Aristo.handleEvent(taskIndexString);
                     break;
 
+                case "find":
+                    if (taskIndexString.isBlank()) {
+                        throw new AristoException("Please provide a keyword to search for!\n");
+                    }
+
+                    TaskList matchingTasks = taskList.find(taskIndexString);
+                    ui.printMatchingTasks(matchingTasks);
+                    break;
+
                 default:
                     throw new AristoException("Ehm, never heard of that command before!\n");
                 }
