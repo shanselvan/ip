@@ -86,6 +86,14 @@ public class TaskList {
         return tasks.isEmpty();
     }
 
+    /**
+     * Returns a {@code TaskList} containing all tasks whose descriptions
+     * contain the given keyword.
+     *
+     * @param keyword The keyword to search for in task descriptions.
+     * @return A {@code TaskList} of tasks whose descriptions contain the keyword.
+     * @throws AristoException If an error occurs while accessing tasks.
+     */
     public TaskList find(String keyword) throws AristoException {
         TaskList matches = new TaskList();
 

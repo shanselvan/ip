@@ -95,12 +95,12 @@ public class Ui {
         if (size == 1) {
             System.out.print("""
                 There is 1 task in your list now.
-                
+
                 """);
         } else {
             System.out.printf("""
                 There are %d tasks in your list now.
-                
+
                 """, size);
         }
     }
@@ -121,7 +121,7 @@ public class Ui {
         System.out.printf("""
             Great job! I have marked this task as done.
             %s
-            
+
             """, task);
     }
 
@@ -132,7 +132,7 @@ public class Ui {
         System.out.printf("""
             Alright, I have marked this task as not done yet.
             %s
-            
+
             """, task);
     }
 
