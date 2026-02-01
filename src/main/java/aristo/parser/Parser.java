@@ -34,11 +34,11 @@ public class Parser {
      * @throws AristoException If the input cannot be parsed as an integer.
      */
     public static int parseTaskIndex(String taskIndexString) throws AristoException {
-         try {
-             return Integer.parseInt(taskIndexString);
-         } catch (NumberFormatException e) {
-             throw new AristoException("Please specify a task number to mark as done!\n");
-         }
+        try {
+            return Integer.parseInt(taskIndexString);
+        } catch (NumberFormatException e) {
+            throw new AristoException("Please specify a task number to mark as done!\n");
+        }
     }
 
     /**
@@ -64,7 +64,8 @@ public class Parser {
     /**
      * Parses an <code>Event</code> task input into description, start time, and end time.
      *
-     * @param taskDetails Input string containing description, start, and end times (format: "DESCRIPTION /from START /to END").
+     * @param taskDetails Input string containing description, start, and end times
+     *     (format: "DESCRIPTION /from START /to END").
      * @return Array where index 0 is the description, index 1 is the start time, index 2 is the end time.
      * @throws AristoException If input is missing description, start, or end times.
      */

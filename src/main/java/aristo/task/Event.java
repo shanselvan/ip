@@ -9,11 +9,10 @@ import java.time.format.DateTimeFormatter;
  * An <code>Event</code> task contains a description, start time and end time.
  */
 public class Event extends Task {
-    protected LocalDate from;
-    protected LocalDate to;
-
     private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    protected LocalDate from;
+    protected LocalDate to;
 
     /**
      * Constructs an Event task with a description, start date, and end date.
@@ -33,8 +32,8 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from.format(OUTPUT_FORMATTER) +
-                " to: " + to.format(OUTPUT_FORMATTER) + ")";
+        return "[E]" + super.toString() + " (from: " + from.format(OUTPUT_FORMATTER)
+                + " to: " + to.format(OUTPUT_FORMATTER) + ")";
     }
 
     /**
