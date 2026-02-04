@@ -47,7 +47,7 @@ test {
 }
 
 application {
-    mainClass.set("aristo.Aristo")
+    mainClass.set("aristo.Launcher")
 }
 
 shadowJar {
