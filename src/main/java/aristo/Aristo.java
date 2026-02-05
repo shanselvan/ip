@@ -40,10 +40,9 @@ public class Aristo {
      */
     public static void main(String[] args) {
         Aristo aristo = new Aristo();
-        ui.greet();
         String userInput = ui.fetchNextCommand();
 
-        while (!userInput.equals(COMMAND_BYE)) {
+        while (!userInput.equals("bye")) {
             aristo.getResponse(userInput);
             userInput = ui.fetchNextCommand();
         }
@@ -52,6 +51,14 @@ public class Aristo {
     }
 
     public String getResponse(String input) {
+        if (input.equals("greet")) {
+            return ui.greet();
+        }
+
+        if (input.equals("bye")) {
+            return ui.exit();
+        }
+
         taskList = new TaskList(storage.loadTasks());
 
         try {

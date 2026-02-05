@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * Controller for the main GUI.
@@ -49,5 +50,17 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getDukeDialog(response, dukeImage)
         );
         userInput.clear();
+
+        if (input.equals("bye")) {
+            javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(javafx.util.Duration.millis(500));
+            pause.setOnFinished(event -> ((Stage) scrollPane.getScene().getWindow()).close());
+            pause.play();
+        }
+    }
+
+    public void displayGreeting(String greeting) {
+        dialogContainer.getChildren().add(
+                DialogBox.getDukeDialog(greeting, dukeImage)
+        );
     }
 }

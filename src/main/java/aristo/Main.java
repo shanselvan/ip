@@ -26,6 +26,11 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             fxmlLoader.<aristo.MainWindow>getController().setAristo(aristo);  // inject the Aristo instance
+
+            MainWindow controller = fxmlLoader.getController();
+            String greeting = aristo.getResponse("greet");
+            controller.displayGreeting(greeting);
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
