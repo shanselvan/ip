@@ -30,10 +30,8 @@ public class Ui {
      */
     public String greet() {
         String message = """
-                * * * * * * * * * * * * * * * * * * * * * * * * * *
                 Hello, human!
                 Aristo here to assist. Fire away!
-                * * * * * * * * * * * * * * * * * * * * * * * * * *
                 
                 """;
         System.out.print(message);
@@ -45,10 +43,8 @@ public class Ui {
      */
     public String exit() {
         String message = """
-        * * * * * * * * * * * * * * * * * * * * * * * * * *
         Goodbye!
         Aristo eagerly awaits your return...
-        * * * * * * * * * * * * * * * * * * * * * * * * * *
         """;
         System.out.print(message);
         return message;
