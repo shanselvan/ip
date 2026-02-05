@@ -1,0 +1,26 @@
+.label {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+    -fx-padding: 10px 14px;
+    -fx-background-radius: 1.3em 1.3em 1.3em 0.3em;
+}
+
+.reply-label {
+    -fx-background-color: #34C759;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10px 14px;
+    -fx-background-radius: 1.3em 1.3em 0.3em 1.3em;
+}
+
+#displayPicture {
+    /* Shadow effect on image. */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
+
+    /* Change size of image. */
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+
+    /* Rotate image clockwise by degrees. */
+    -fx-rotate: 0;
+}
+

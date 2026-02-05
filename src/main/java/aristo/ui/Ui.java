@@ -28,40 +28,58 @@ public class Ui {
     /**
      * Displays the greeting message when Aristo starts.
      */
-    public void greet() {
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
-        System.out.println("Hello, human!");
-        System.out.println("Aristo here to assist. Fire away!");
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
-        System.out.println();
+    public String greet() {
+        String message = """
+                * * * * * * * * * * * * * * * * * * * * * * * * * *
+                Hello, human!
+                Aristo here to assist. Fire away!
+                * * * * * * * * * * * * * * * * * * * * * * * * * *
+                
+                """;
+        System.out.print(message);
+        return message;
     }
 
     /**
      * Displays the farewell message when Aristo exits.
      */
-    public void exit() {
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
-        System.out.println("Goodbye!");
-        System.out.println("Aristo eagerly awaits your return...");
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *");
+    public String exit() {
+        String message = """
+        * * * * * * * * * * * * * * * * * * * * * * * * * *
+        Goodbye!
+        Aristo eagerly awaits your return...
+        * * * * * * * * * * * * * * * * * * * * * * * * * *
+        """;
+        System.out.print(message);
+        return message;
     }
 
     /**
      * Prints all tasks currently stored in the task list.
      *
      * @param taskList The list of tasks to be printed.
+     * @return the formatted string representation of the task list output
      * @throws AristoException If an invalid task index is accessed.
      */
-    public void printTaskList(TaskList taskList) throws AristoException {
+    public String printTaskList(TaskList taskList) throws AristoException {
+        StringBuilder output = new StringBuilder();
+
         if (taskList.isEmpty()) {
-            System.out.println("There are no tasks in your list.\n");
+            output.append("There are no tasks in your list.\n\n");
         } else {
             for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
                 Task currentTask = taskList.getTask(taskIndex + 1);
-                System.out.printf("%d. %s\n", taskIndex + 1, currentTask);
+                output.append(taskIndex + 1)
+                        .append(". ")
+                        .append(currentTask)
+                        .append("\n");
             }
-            System.out.println();
+            output.append("\n");
         }
+
+        String message = output.toString();
+        System.out.print(message);
+        return message;
     }
 
     /**
@@ -71,38 +89,53 @@ public class Ui {
      * Otherwise, prints the tasks in a numbered list.
      *
      * @param tasks the {@link TaskList} containing the matching tasks to print.
+     * @return the formatted string representing the printed matching tasks
      * @throws AristoException if an error occurs while accessing the tasks
      */
-    public void printMatchingTasks(TaskList tasks) throws AristoException {
+    public String printMatchingTasks(TaskList tasks) throws AristoException {
+        StringBuilder output = new StringBuilder();
+
         if (tasks.isEmpty()) {
-            System.out.println("There are no tasks matching that keyword.\n");
+            output.append("There are no tasks matching that keyword.\n\n");
         } else {
-            System.out.println("Here are the matching tasks in your list:");
+            output.append("Here are the matching tasks in your list:\n");
 
             for (int i = 1; i <= tasks.size(); i++) {
-                System.out.println(i + "." + tasks.getTask(i));
+                output.append(i)
+                        .append(". ")
+                        .append(tasks.getTask(i))
+                        .append("\n");
             }
-            System.out.println();
+            output.append("\n");
         }
+
+        String message = output.toString();
+        System.out.print(message);
+        return message;
     }
 
     /**
      * Prints the current number of tasks in the supplied task list.
      *
      */
-    public void printNumberOfTasks(TaskList taskList) {
+    public String printNumberOfTasks(TaskList taskList) {
         int size = taskList.size();
+        String message;
+
         if (size == 1) {
-            System.out.print("""
-                There is 1 task in your list now.
+            message = """
+            There is 1 task in your list now.
 
-                """);
+            """;
         } else {
-            System.out.printf("""
-                There are %d tasks in your list now.
+            message = String.format("""
+            There are %d tasks in your list now.
 
-                """, size);
+            """, size);
         }
+
+        System.out.print(message);
+        return message;
     }
 
     /**
@@ -117,69 +150,89 @@ public class Ui {
     /**
      * Displays confirmation message to indicate a task is marked as complete.
      */
-    public void showTaskMarked(Task task) {
-        System.out.printf("""
-            Great job! I have marked this task as done.
-            %s
+    public String showTaskMarked(Task task) {
+        String message = String.format("""
+        Great job! I have marked this task as done.
+        %s
 
-            """, task);
+        """, task);
+
+        System.out.print(message);
+        return message;
     }
 
     /**
      * Displays confirmation message to indicate a task is unmarked.
      */
-    public void showTaskUnmarked(Task task) {
-        System.out.printf("""
-            Alright, I have marked this task as not done yet.
-            %s
+    public String showTaskUnmarked(Task task) {
+        String message = String.format("""
+        Alright, I have marked this task as not done yet.
+        %s
 
-            """, task);
+        """, task);
+
+        System.out.print(message);
+        return message;
     }
 
     /**
      * Displays confirmation message to indicate a task has been removed from the list.
      */
-    public void showTaskDeleted(Task task) {
-        System.out.printf("""
-            Okay, I have removed this task from your list:
-            %s
-            """, task);
+    public String showTaskDeleted(Task task) {
+        String message = String.format("""
+        Okay, I have removed this task from your list:
+        %s
+        """, task);
+
+        System.out.print(message);
+        return message;
     }
 
     /**
      * Displays confirmation message to indicate a {@link Todo} task has been added.
      */
-    public void showTodoTaskAdded(Todo todoTask) {
-        System.out.printf("""
-            Noted, I have added this task to your list:
-            %s
-            """, todoTask);
+    public String showTodoTaskAdded(Todo todoTask) {
+        String message = String.format("""
+        Noted, I have added this task to your list:
+        %s
+        """, todoTask);
+
+        System.out.print(message);
+        return message;
     }
 
     /**
      * Displays confirmation message to indicate a {@link Deadline} task has been added.
      */
-    public void showDeadlineTaskAdded(Deadline deadlineTask) {
-        System.out.printf("""
-            Noted, I have added this task to your list:
-            %s
-            """, deadlineTask);
+    public String showDeadlineTaskAdded(Deadline deadlineTask) {
+        String message = String.format("""
+        Noted, I have added this task to your list:
+        %s
+        """, deadlineTask);
+
+        System.out.print(message);
+        return message;
     }
 
     /**
      * Displays confirmation message to indicate an {@link Event} task has been added.
      */
-    public void showEventTaskAdded(Event eventTask) {
-        System.out.printf("""
-            Noted, I have added this event to your list:
-            %s
-            """, eventTask);
+    public String showEventTaskAdded(Event eventTask) {
+        String message = String.format("""
+        Noted, I have added this task to your list:
+        %s
+        """, eventTask);
+
+        System.out.print(message);
+        return message;
     }
 
     /**
      * Displays an error message to the user.
+     *
      */
-    public void showError(String errorMessage) {
+    public String showError(String errorMessage) {
         System.out.println(errorMessage);
+        return errorMessage;
     }
 }
