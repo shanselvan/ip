@@ -50,21 +50,28 @@ public class Parser {
      */
     public static String[] parseDeadline(String taskDetails) throws AristoException {
         String[] taskComponents = taskDetails.split(" /by ", 2);
-        String firstComponent = taskComponents[0];
-        String secondComponent = taskComponents[1];
 
-        if (hasMissingParts(taskComponents) || isEmptyComponent(firstComponent) || isEmptyComponent(secondComponent)) {
+        if (hasMissingParts(taskComponents)) {
             throw new AristoException("""
                 Ensure you have included both the task description & deadline! e.g XXX /by YYY\n
                 """
             );
         }
 
+        String firstComponent = taskComponents[0];
+        String secondComponent = taskComponents[1];
+
+        if (isEmptyComponent(firstComponent) || isEmptyComponent(secondComponent)) {
+            throw new AristoException("""
+                Ensure you have included both the task description & deadline! e.g XXX /by YYY\n
+                """
+            );
+        }
         return taskComponents;
     }
 
     private static boolean hasMissingParts(String[] taskComponents) {
-        return taskComponents.length != 2;
+        return taskComponents.length < 2;
     }
 
     private static boolean isEmptyComponent(String component) {
