@@ -63,6 +63,8 @@ public class Aristo {
 
         try {
             String[] parsed = Parser.parseCommand(input);
+            assert parsed.length == 2 : "Parsed command does not contain 2 components";
+
             String command = parsed[0];
             String taskIndexString = parsed[1];
 
@@ -132,6 +134,7 @@ public class Aristo {
      * @throws AristoException If the task is already marked as done or index is invalid.
      */
     public String handleMarkTask(int taskIndexInteger) throws AristoException {
+        assert taskIndexInteger > 0 : "Task index cannot be less than 1";
         Task task = taskList.getTask(taskIndexInteger);
 
         if (task.isDone()) {
@@ -220,6 +223,7 @@ public class Aristo {
      */
     private static Deadline getDeadline(String taskDetails) throws AristoException {
         String[] taskComponents = Parser.parseDeadline(taskDetails);
+        assert taskComponents.length == 2 : "Parsed deadline does not contain 2 components";
 
         String description = taskComponents[0];
         String deadline = taskComponents[1];
@@ -240,6 +244,8 @@ public class Aristo {
      */
     public String handleEvent(String taskDetails) throws AristoException {
         String[] taskComponents = Parser.parseEvent(taskDetails);
+        assert taskComponents.length == 3 : "Parsed event does not contain 3 components";
+
         String description = taskComponents[0];
         String from = taskComponents[1];
         String to = taskComponents[2];
