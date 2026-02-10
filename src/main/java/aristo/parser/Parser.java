@@ -50,8 +50,10 @@ public class Parser {
      */
     public static String[] parseDeadline(String taskDetails) throws AristoException {
         String[] taskComponents = taskDetails.split(" /by ", 2);
+        String firstComponent = taskComponents[0];
+        String secondComponent = taskComponents[1];
 
-        if (taskComponents.length != 2 || taskComponents[0].isBlank() || taskComponents[1].isBlank()) {
+        if (hasMissingParts(taskComponents) || isEmptyComponent(firstComponent) || isEmptyComponent(secondComponent)) {
             throw new AristoException("""
                 Ensure you have included both the task description & deadline! e.g XXX /by YYY\n
                 """
@@ -59,6 +61,14 @@ public class Parser {
         }
 
         return taskComponents;
+    }
+
+    private static boolean hasMissingParts(String[] taskComponents) {
+        return taskComponents.length != 2;
+    }
+
+    private static boolean isEmptyComponent(String component) {
+        return component.isBlank();
     }
 
     /**
@@ -71,18 +81,20 @@ public class Parser {
      */
     public static String[] parseEvent(String taskDetails) throws AristoException {
         String[] taskComponents = taskDetails.split(" /from ", 2);
+        String firstComponent = taskComponents[0];
 
-        if (taskComponents.length != 2 || taskComponents[0].isBlank()) {
+        if (hasMissingParts(taskComponents) || isEmptyComponent(firstComponent)) {
             throw new AristoException("Have you included the description & times? e.g XXX /from YYY /to ZZZ.\n");
         }
 
-        String description = taskComponents[0];
         String[] fromAndTo = taskComponents[1].split(" /to ", 2);
+        String fromComponent = fromAndTo[0];
+        String toComponent = fromAndTo[1];
 
-        if (fromAndTo.length != 2 || fromAndTo[0].isBlank() || fromAndTo[1].isBlank()) {
+        if (hasMissingParts(fromAndTo) || isEmptyComponent(fromComponent) || isEmptyComponent(toComponent)) {
             throw new AristoException("Have you included the from and to times? e.g XXX /from YYY /to ZZZ.\n");
         }
 
-        return new String[]{description, fromAndTo[0], fromAndTo[1]};
+        return new String[]{firstComponent, fromComponent, toComponent};
     }
 }
