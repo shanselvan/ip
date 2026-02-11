@@ -19,11 +19,15 @@ public class Parser {
         String[] parsedUserInput = userInput.split(" ", 2);
         String command = parsedUserInput[0];
 
-        String taskIndexString = (parsedUserInput.length == 1)
-                ? ""
-                : parsedUserInput[1];
+        String taskIndexString = getTaskIndexString(parsedUserInput);
 
         return new String[]{command, taskIndexString};
+    }
+
+    private static String getTaskIndexString(String[] parsedUserInput) {
+        return (parsedUserInput.length == 1)
+                ? ""
+                : parsedUserInput[1];
     }
 
     /**
