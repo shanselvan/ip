@@ -78,6 +78,7 @@ public class TaskStorage {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split(" \\| ");
+                assert parts.length >= 3 : "Task format is invalid";
 
                 String taskType = parts[0];
                 boolean isDone = parts[1].equals("1");
@@ -91,6 +92,7 @@ public class TaskStorage {
                     break;
 
                 case "D":
+                    assert parts.length >= 4 : "Deadline task missing /by";
                     String by = parts[3];
                     task = new Deadline(taskDescription, by);
                     break;
@@ -107,8 +109,10 @@ public class TaskStorage {
 
                 if (task != null && isDone) {
                     task.markAsDone();
+                    assert task.isDone() : "Task should be marked as done after loading";
                 }
 
+                assert task != null : "Null task is added to the list of loaded tasks";
                 loadedTasks.add(task);
             }
         } catch (IOException e) {
