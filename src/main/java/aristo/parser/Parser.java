@@ -71,10 +71,13 @@ public class Parser {
                 """
             );
         }
+
+        assert taskComponents.length == 2 : "Parsed deadline String[] should have length 2";
         return taskComponents;
     }
 
     private static boolean hasMissingParts(String[] taskComponents) {
+        assert taskComponents != null : "Task components cannot be null";
         return taskComponents.length < 2;
     }
 
@@ -106,6 +109,7 @@ public class Parser {
             throw new AristoException("Have you included the from and to times? e.g XXX /from YYY /to ZZZ.\n");
         }
 
+        assert fromAndTo.length == 2 : "From and to components of parsed event must be present";
         return new String[]{firstComponent, fromComponent, toComponent};
     }
 }

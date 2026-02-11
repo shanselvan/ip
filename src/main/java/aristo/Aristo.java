@@ -54,6 +54,8 @@ public class Aristo {
 
         try {
             String[] parsed = Parser.parseCommand(input);
+            assert parsed.length == 2 : "Parsed command does not contain 2 components";
+
             String command = parsed[0];
             String argument = parsed[1];
 
