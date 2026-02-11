@@ -82,35 +82,7 @@ public class TaskStorage {
 
                 String taskType = parts[0];
                 boolean isDone = parts[1].equals("1");
-                String taskDescription = parts[2];
-
-                Task task = null;
-
-                switch (taskType) {
-                case "T":
-                    task = new Todo(taskDescription);
-                    break;
-
-                case "D":
-                    assert parts.length >= 4 : "Deadline task missing /by";
-                    String by = parts[3];
-                    task = new Deadline(taskDescription, by);
-                    break;
-
-                case "E":
-                    String from = (parts.length > 3) ? parts[3] : "";
-                    String to = (parts.length > 4) ? parts[4] : "";
-                    task = new Event(taskDescription, from, to);
-                    break;
-
-                default:
-                    break;
-                }
-
-                if (task != null && isDone) {
-                    task.markAsDone();
-                    assert task.isDone() : "Task should be marked as done after loading";
-                }
+                Task task = getTask(parts, taskType, isDone);
 
                 assert task != null : "Null task is added to the list of loaded tasks";
                 loadedTasks.add(task);
@@ -120,6 +92,39 @@ public class TaskStorage {
         }
 
         return loadedTasks;
+    }
+
+    private static Task getTask(String[] parts, String taskType, boolean isDone) {
+        String taskDescription = parts[2];
+
+        Task task = null;
+
+        switch (taskType) {
+        case "T":
+            task = new Todo(taskDescription);
+            break;
+
+        case "D":
+            assert parts.length >= 4 : "Deadline task missing /by";
+            String by = parts[3];
+            task = new Deadline(taskDescription, by);
+            break;
+
+        case "E":
+            String from = (parts.length > 3) ? parts[3] : "";
+            String to = (parts.length > 4) ? parts[4] : "";
+            task = new Event(taskDescription, from, to);
+            break;
+
+        default:
+            break;
+        }
+
+        if (task != null && isDone) {
+            task.markAsDone();
+            assert task.isDone() : "Task should be marked as done after loading";
+        }
+        return task;
     }
 
     /**

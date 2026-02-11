@@ -19,11 +19,15 @@ public class Parser {
         String[] parsedUserInput = userInput.split(" ", 2);
         String command = parsedUserInput[0];
 
-        String taskIndexString = (parsedUserInput.length == 1)
-                ? ""
-                : parsedUserInput[1];
+        String taskIndexString = getTaskIndexString(parsedUserInput);
 
         return new String[]{command, taskIndexString};
+    }
+
+    private static String getTaskIndexString(String[] parsedUserInput) {
+        return (parsedUserInput.length == 1)
+                ? ""
+                : parsedUserInput[1];
     }
 
     /**
@@ -50,10 +54,18 @@ public class Parser {
      */
     public static String[] parseDeadline(String taskDetails) throws AristoException {
         String[] taskComponents = taskDetails.split(" /by ", 2);
+
+        if (hasMissingParts(taskComponents)) {
+            throw new AristoException("""
+                Ensure you have included both the task description & deadline! e.g XXX /by YYY\n
+                """
+            );
+        }
+
         String firstComponent = taskComponents[0];
         String secondComponent = taskComponents[1];
 
-        if (hasMissingParts(taskComponents) || isEmptyComponent(firstComponent) || isEmptyComponent(secondComponent)) {
+        if (isEmptyComponent(firstComponent) || isEmptyComponent(secondComponent)) {
             throw new AristoException("""
                 Ensure you have included both the task description & deadline! e.g XXX /by YYY\n
                 """
@@ -66,7 +78,7 @@ public class Parser {
 
     private static boolean hasMissingParts(String[] taskComponents) {
         assert taskComponents != null : "Task components cannot be null";
-        return taskComponents.length != 2;
+        return taskComponents.length < 2;
     }
 
     private static boolean isEmptyComponent(String component) {
