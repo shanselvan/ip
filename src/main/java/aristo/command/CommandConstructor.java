@@ -17,6 +17,7 @@ public class CommandConstructor {
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_FIND = "find";
+    private static final String COMMAND_SCHEDULE = "schedule";
 
     private final TaskList taskList;
     private final TaskStorage storage;
@@ -52,6 +53,7 @@ public class CommandConstructor {
             case COMMAND_DEADLINE -> new DeadlineCommand(taskList, storage, ui);
             case COMMAND_EVENT -> new EventCommand(taskList, storage, ui);
             case COMMAND_FIND -> new FindCommand(taskList, storage, ui);
+            case COMMAND_SCHEDULE -> new ScheduleCommand(taskList, storage, ui);
             default -> throw new AristoException("Ehm, never heard of that command before!\n");
         };
     }

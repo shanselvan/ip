@@ -40,4 +40,9 @@ public class Deadline extends Task {
         int isDone = this.isDone ? 1 : 0;
         return "D | " + isDone + " | " + this.description + " | " + by.format(INPUT_FORMATTER);
     }
+
+    @Override
+    public boolean isOccurringOn(LocalDate date) {
+        return by.equals(date);
+    }
 }

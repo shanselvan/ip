@@ -1,5 +1,7 @@
 package aristo.task;
 
+import java.time.LocalDate;
+
 /**
  * Represents an abstract task in the Aristo task list.
  * <p>
@@ -68,4 +70,11 @@ public abstract class Task {
      * Returns a string representation of this task for file storage.
      */
     public abstract String toFileString();
+
+    /**
+     * Returns a boolean indicating if the task occurs on the given date.
+     */
+    public boolean isOccurringOn(LocalDate date) {
+        return false;
+    }
 }

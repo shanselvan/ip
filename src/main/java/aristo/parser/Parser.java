@@ -1,5 +1,7 @@
 package aristo.parser;
 
+import java.time.LocalDate;
+
 import aristo.exception.AristoException;
 
 /**
@@ -111,5 +113,20 @@ public class Parser {
 
         assert fromAndTo.length == 2 : "From and to components of parsed event must be present";
         return new String[]{firstComponent, fromComponent, toComponent};
+    }
+
+    /**
+     * Parses a date string in the format YYYY-MM-DD.
+     *
+     * @param dateString String representing the date.
+     * @return Parsed LocalDate object.
+     * @throws AristoException If the input cannot be parsed as a valid date.
+     */
+    public static LocalDate parseDate(String dateString) throws AristoException {
+        try {
+            return LocalDate.parse(dateString);
+        } catch (java.time.format.DateTimeParseException e) {
+            throw new AristoException("Please provide a valid date in the format YYYY-MM-DD! (e.g., 2023-01-01)\n");
+        }
     }
 }
