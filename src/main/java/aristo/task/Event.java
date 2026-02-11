@@ -45,4 +45,9 @@ public class Event extends Task {
         return "E | " + isDone + " | " + this.description + " | " + from.format(INPUT_FORMATTER)
                 + " | " + to.format(INPUT_FORMATTER);
     }
+
+    @Override
+    public boolean isOccurringOn(LocalDate date) {
+        return !date.isBefore(from) && !date.isAfter(to);
+    }
 }

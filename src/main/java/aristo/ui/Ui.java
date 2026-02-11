@@ -1,5 +1,6 @@
 package aristo.ui;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import aristo.exception.AristoException;
@@ -95,6 +96,28 @@ public class Ui {
             output.append("There are no tasks matching that keyword.\n\n");
         } else {
             output.append("Here are the matching tasks in your list:\n");
+
+            for (int i = 1; i <= tasks.size(); i++) {
+                output.append(i)
+                        .append(". ")
+                        .append(tasks.getTask(i))
+                        .append("\n");
+            }
+            output.append("\n");
+        }
+
+        String message = output.toString();
+        System.out.print(message);
+        return message;
+    }
+
+    public String printTasksOnDate(TaskList tasks, LocalDate date) throws AristoException {
+        StringBuilder output = new StringBuilder();
+
+        if (tasks.isEmpty()) {
+            output.append("There are no tasks scheduled today.\n\n");
+        } else {
+            output.append("Here are the tasks scheduled today:\n");
 
             for (int i = 1; i <= tasks.size(); i++) {
                 output.append(i)

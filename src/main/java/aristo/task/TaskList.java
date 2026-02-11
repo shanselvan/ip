@@ -1,5 +1,6 @@
 package aristo.task;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import aristo.exception.AristoException;
@@ -104,7 +105,19 @@ public class TaskList {
                 matches.addTask(task);
             }
         }
-
         return matches;
+    }
+
+    public TaskList getTasksOn(LocalDate date) throws AristoException {
+        TaskList matchingTasks = new TaskList();
+
+        for (int i = 1; i <= this.size(); i++) {
+            Task task = this.getTask(i);
+
+            if (task.isOccurringOn(date)) {
+                matchingTasks.addTask(task);
+            }
+        }
+        return matchingTasks;
     }
 }
