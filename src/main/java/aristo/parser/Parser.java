@@ -59,7 +59,7 @@ public class Parser {
 
         if (hasMissingParts(taskComponents)) {
             throw new AristoException("""
-                Ensure you have included both the task description & deadline! e.g XXX /by YYY\n
+                Ensure you have included both the task description & deadline! e.g XXX /by YYY
                 """
             );
         }
@@ -69,7 +69,7 @@ public class Parser {
 
         if (isEmptyComponent(firstComponent) || isEmptyComponent(secondComponent)) {
             throw new AristoException("""
-                Ensure you have included both the task description & deadline! e.g XXX /by YYY\n
+                Ensure you have included both the task description & deadline! e.g XXX /by YYY
                 """
             );
         }
@@ -104,10 +104,14 @@ public class Parser {
         }
 
         String[] fromAndTo = taskComponents[1].split(" /to ", 2);
+
+        if (hasMissingParts(fromAndTo)) {
+            throw new AristoException("Have you included the from and to times? e.g XXX /from YYY /to ZZZ.\n");
+        }
+
         String fromComponent = fromAndTo[0];
         String toComponent = fromAndTo[1];
-
-        if (hasMissingParts(fromAndTo) || isEmptyComponent(fromComponent) || isEmptyComponent(toComponent)) {
+        if (isEmptyComponent(fromComponent) || isEmptyComponent(toComponent)) {
             throw new AristoException("Have you included the from and to times? e.g XXX /from YYY /to ZZZ.\n");
         }
 
