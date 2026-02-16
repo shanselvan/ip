@@ -32,7 +32,7 @@ public class UnmarkCommand extends Command {
         }
 
         task.markAsNotDone();
-        storage.saveTasks(taskList);
+        storage.saveTasksToFile(taskList);
         return ui.showTaskUnmarked(task);
     }
 }

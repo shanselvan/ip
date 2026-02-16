@@ -36,7 +36,7 @@ public class EventCommand extends Command {
         try {
             Event eventTask = new Event(description, from, to);
             taskList.addTask(eventTask);
-            storage.saveTasks(taskList);
+            storage.saveTasksToFile(taskList);
             return ui.showEventTaskAdded(eventTask) + printNumberOfTasks();
         } catch (DateTimeParseException e) {
             throw new AristoException("Please use yyyy-MM-dd format for dates!\n");

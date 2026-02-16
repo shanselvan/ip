@@ -32,7 +32,7 @@ public class MarkCommand extends Command {
         }
 
         task.markAsDone();
-        storage.saveTasks(taskList);
+        storage.saveTasksToFile(taskList);
         return ui.showTaskMarked(task);
     }
 }

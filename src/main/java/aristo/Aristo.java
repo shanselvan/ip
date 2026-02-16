@@ -19,7 +19,7 @@ public class Aristo {
     public Aristo() {
         this.ui = new Ui();
         this.storage = new TaskStorage("./data/aristo.txt");
-        this.taskList = new TaskList(storage.loadTasks());
+        this.taskList = new TaskList(storage.loadTasksFromFile());
     }
 
     /**
@@ -50,7 +50,7 @@ public class Aristo {
             return ui.exit();
         }
 
-        this.taskList = new TaskList(storage.loadTasks());
+        this.taskList = new TaskList(storage.loadTasksFromFile());
 
         try {
             String[] parsed = Parser.parseCommand(input);

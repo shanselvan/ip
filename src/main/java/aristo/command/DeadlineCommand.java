@@ -33,7 +33,7 @@ public class DeadlineCommand extends Command {
         try {
             Deadline deadlineTask = new Deadline(description, deadline);
             taskList.addTask(deadlineTask);
-            storage.saveTasks(taskList);
+            storage.saveTasksToFile(taskList);
             return ui.showDeadlineTaskAdded(deadlineTask) + printNumberOfTasks();
         } catch (DateTimeParseException e) {
             throw new AristoException("Invalid date format! Please enter a valid date in the format yyyy-MM-dd.\n");

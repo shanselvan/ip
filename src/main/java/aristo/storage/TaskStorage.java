@@ -23,6 +23,11 @@ import aristo.task.Todo;
 
 public class TaskStorage {
     private final Path filePath;
+    private static final String DELIMITER = " \\| ";
+    private static final int MIN_FIELDS = 3;
+    private static final int TYPE_INDEX = 0;
+    private static final int DONE_INDEX = 1;
+    private static final int DESC_INDEX = 2;
 
     /**
      * Constructs a TaskStorage object for the given file path.
@@ -71,20 +76,17 @@ public class TaskStorage {
      *
      * @return List of tasks loaded from the file.
      */
-    public ArrayList<Task> loadTasks() {
+    public ArrayList<Task> loadTasksFromFile() {
         ArrayList<Task> loadedTasks = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(filePath)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                String[] parts = line.split(" \\| ");
-                assert parts.length >= 3 : "Task format is invalid";
+                if (isEmptyOrComment(line)) {
+                    continue;
+                }
 
-                String taskType = parts[0];
-                boolean isDone = parts[1].equals("1");
-                Task task = getTask(parts, taskType, isDone);
-
-                assert task != null : "Null task is added to the list of loaded tasks";
+                Task task = parseTaskFromLine(line);
                 loadedTasks.add(task);
             }
         } catch (IOException e) {
@@ -94,37 +96,61 @@ public class TaskStorage {
         return loadedTasks;
     }
 
-    private static Task getTask(String[] parts, String taskType, boolean isDone) {
-        String taskDescription = parts[2];
+    private boolean isEmptyOrComment(String line) {
+        return line.isEmpty() || line.startsWith("#");
+    }
 
-        Task task = null;
+    private boolean isValidTaskFormat(String[] parts) {
+        return parts.length >= MIN_FIELDS;
+    }
 
+    private boolean parseIsDone(String doneField) {
+        return doneField.equals("1");
+    }
+
+    private Task parseTaskFromLine(String line) {
+        String[] parts = line.split(DELIMITER);
+
+        if (!isValidTaskFormat(parts)) {
+            return null;
+        }
+
+        String taskType = parts[TYPE_INDEX];
+        boolean isDone = parseIsDone(parts[DONE_INDEX]);
+        String description = parts[DESC_INDEX];
+
+        Task task = createTaskByType(taskType, parts, description);
+        assert task != null : "Null task is added to the list of loaded tasks";
+
+        if (isDone) {
+            task.markAsDone();
+        }
+
+        return task;
+    }
+
+    /**
+     * Creates a Task object based on type and parts array.
+     */
+    private Task createTaskByType(String taskType, String[] parts, String description) {
         switch (taskType) {
         case "T":
-            task = new Todo(taskDescription);
-            break;
+            return new Todo(description);
 
         case "D":
-            assert parts.length >= 4 : "Deadline task missing /by";
-            String by = parts[3];
-            task = new Deadline(taskDescription, by);
-            break;
+            if (parts.length < 4) {
+                throw new IllegalArgumentException("Deadline missing /by field");
+            }
+            return new Deadline(description, parts[3]);
 
         case "E":
             String from = (parts.length > 3) ? parts[3] : "";
             String to = (parts.length > 4) ? parts[4] : "";
-            task = new Event(taskDescription, from, to);
-            break;
+            return new Event(description, from, to);
 
         default:
-            break;
+            return null;
         }
-
-        if (task != null && isDone) {
-            task.markAsDone();
-            assert task.isDone() : "Task should be marked as done after loading";
-        }
-        return task;
     }
 
     /**
@@ -135,18 +161,23 @@ public class TaskStorage {
      *
      * @param taskList TaskList containing the tasks to be saved.
      */
-    public void saveTasks(TaskList taskList) {
+    public void saveTasksToFile(TaskList taskList) {
         try {
-            ArrayList<Task> tasks = taskList.asList();
-            ArrayList<String> lines = new ArrayList<>();
-
-            for (Task task : tasks) {
-                lines.add(task.toFileString());
-            }
-
+            ArrayList<String> lines = convertTasksToFileFormat(taskList);
             Files.write(filePath, lines);
         } catch (IOException e) {
             System.out.println("Error writing to data file! " + e.getMessage());
         }
+    }
+
+    /**
+     * Converts a TaskList into an ArrayList of Strings.
+     */
+    private ArrayList<String> convertTasksToFileFormat(TaskList taskList) {
+        ArrayList<String> lines = new ArrayList<>();
+        for (Task task : taskList.asList()) {
+            lines.add(task.toFileString());
+        }
+        return lines;
     }
 }
