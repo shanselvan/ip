@@ -25,7 +25,7 @@ public class MainWindow extends AnchorPane {
     private Aristo aristo;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.jpg"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/Aristo.jpg"));
+    private Image aristoImage = new Image(this.getClass().getResourceAsStream("/images/Aristo.jpg"));
 
     @FXML
     public void initialize() {
@@ -47,7 +47,7 @@ public class MainWindow extends AnchorPane {
         String response = aristo.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getAristoDialog(response, aristoImage)
         );
         userInput.clear();
 
@@ -60,7 +60,7 @@ public class MainWindow extends AnchorPane {
 
     public void displayGreeting(String greeting) {
         dialogContainer.getChildren().add(
-                DialogBox.getDukeDialog(greeting, dukeImage)
+                DialogBox.getAristoDialog(greeting, aristoImage)
         );
     }
 }
