@@ -15,8 +15,13 @@
 .button {
     -fx-background-color: #007AFF;
     -fx-text-fill: white;
-    -fx-font: 20px "SF Pro Text", "Inter", "Arial";
-    -fx-background-radius: 999px;
+    -fx-font-size: 21px; /* bigger font for arrow */
+    -fx-font-family: "Segoe UI Symbol", "Arial", "SF Pro Text"; /* ensure arrow is supported */
+    -fx-background-radius: 50%;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+    -fx-alignment: center;      /* center the arrow */
+    -fx-cursor: hand;
 }
 
 .button:hover {
