@@ -18,6 +18,7 @@ public class CommandConstructor {
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_FIND = "find";
     private static final String COMMAND_SCHEDULE = "schedule";
+    private static final String COMMAND_BLANK = "";
 
     private final TaskList taskList;
     private final TaskStorage storage;
@@ -54,7 +55,8 @@ public class CommandConstructor {
             case COMMAND_EVENT -> new EventCommand(taskList, storage, ui);
             case COMMAND_FIND -> new FindCommand(taskList, storage, ui);
             case COMMAND_SCHEDULE -> new ScheduleCommand(taskList, storage, ui);
-            default -> throw new AristoException("Ehm, never heard of that command before!\n");
+            case COMMAND_BLANK -> throw new AristoException("You got to type a command...");
+            default -> throw new AristoException("Well, never heard of that command before! :p\n");
         };
     }
 }

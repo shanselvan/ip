@@ -33,7 +33,6 @@ public class Ui {
         String message = """
                 Hello, human!
                 Aristo here to assist. Fire away!
-                
                 """;
         System.out.print(message);
         return message;
@@ -93,9 +92,9 @@ public class Ui {
         StringBuilder output = new StringBuilder();
 
         if (tasks.isEmpty()) {
-            output.append("There are no tasks matching that keyword.\n\n");
+            output.append("There are no tasks matching that keyword.");
         } else {
-            output.append("Here are the matching tasks in your list:\n");
+            output.append("Here are the matching tasks in your list:");
             buildStringOfTasks(tasks, output);
             output.append("\n");
         }
@@ -123,7 +122,6 @@ public class Ui {
             output.append("Here are the tasks scheduled today:\n");
 
             buildStringOfTasks(tasks, output);
-            output.append("\n");
         }
 
         String message = output.toString();
@@ -142,12 +140,10 @@ public class Ui {
         if (size == 1) {
             message = """
             There is 1 task in your list now.
-
             """;
         } else {
             message = String.format("""
             There are %d tasks in your list now.
-
             """, size);
         }
 
@@ -171,7 +167,6 @@ public class Ui {
         String message = String.format("""
         Great job! I have marked this task as done.
         %s
-
         """, task);
 
         System.out.print(message);
@@ -185,7 +180,6 @@ public class Ui {
         String message = String.format("""
         Alright, I have marked this task as not done yet.
         %s
-
         """, task);
 
         System.out.print(message);
