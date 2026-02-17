@@ -31,8 +31,7 @@ public class Ui {
      */
     public String greet() {
         String message = """
-                Hello, human!
-                Aristo here to assist. Fire away!
+                Hello, human! Aristo here to assist. Fire away!
                 """;
         System.out.print(message);
         return message;

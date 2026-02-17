@@ -3,6 +3,10 @@
     -fx-background-color: main-color;
 }
 
+.anchor-pane {
+    -fx-background-color: #AB1212;
+}
+
 .text-field {
     -fx-background-color: #FFFFFF;
     -fx-border-color: #D1D1D6;
