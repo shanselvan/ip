@@ -4,8 +4,8 @@
     -fx-padding: 10px 14px;
     -fx-background-radius: 1.3em 1.3em 0.3em 1.3em;
     -fx-border-radius: 1.3em 1.3em 0.3em 1.3em;
-    -fx-border-color: #28A745;
-    -fx-border-width: 1px;
+    -fx-border-color: #1E7A3A;
+    -fx-border-width: 1.5px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0.5, 2, 2);
     -fx-font-family: "SF Pro Text", "Inter", "Arial";
     -fx-font-size: 13px;
@@ -17,8 +17,8 @@
     -fx-padding: 10px 14px;
     -fx-background-radius: 1.3em 1.3em 1.3em 0.3em;
     -fx-border-radius: 1.3em 1.3em 1.3em 0.3em;
-    -fx-border-color: #D1D1D6;
-    -fx-border-width: 1px;
+    -fx-border-color: #AEAEB2;
+    -fx-border-width: 1.5px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0.5, 2, 2);
     -fx-font-family: "SF Pro Text", "Inter", "Arial";
     -fx-font-size: 14px;

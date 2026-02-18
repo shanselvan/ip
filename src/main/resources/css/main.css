@@ -1,10 +1,6 @@
 .root {
     main-color: #F2F2F7;     /* Create a looked-up color called "main-color" within root. */
-    -fx-background-color: main-color;
-}
-
-.anchor-pane {
-    -fx-background-color: #AB1212;
+    -fx-background-color: linear-gradient(to bottom right, #DDD0C0, #CCBBA8);
 }
 
 .text-field {
@@ -42,6 +38,10 @@
     -fx-background-color: transparent;
 }
 
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
 .scroll-bar {
     -fx-background-color: transparent;
     -fx-pref-width: 8px;
@@ -59,14 +59,11 @@
 }
 
 .scroll-bar:hover .thumb {
-    -fx-background-color: #A6A6A6;       /* lighter grey on hover */
+    -fx-background-color: #A6A6A6;
 }
 
-
-/* Hides the increment and decrement buttons. */
 .scroll-bar .increment-button,
 .scroll-bar .decrement-button {
     -fx-pref-height: 0;
     -fx-opacity: 0;
 }
-
