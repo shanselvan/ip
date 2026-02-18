@@ -1,6 +1,6 @@
 T | 1 | Buy bread and eggs
 T | 1 | Fold laundry
-E | 1 | Final exams period | 2026-03-20 | 2026-03-24
+E | 0 | Final exams period | 2026-03-20 | 2026-03-24
 T | 0 | Submit essay
 D | 0 | Finish math homework | 2026-03-15
 E | 0 | Summer trip | 2026-06-01 | 2026-06-15

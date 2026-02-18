@@ -1,5 +1,7 @@
 package aristo.command;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import aristo.exception.AristoException;
@@ -14,6 +16,7 @@ import aristo.ui.Ui;
  */
 public class EventCommand extends Command {
     private final Ui ui;
+    private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public EventCommand(TaskList taskList, TaskStorage storage, Ui ui) {
         super(taskList, storage);
@@ -31,6 +34,10 @@ public class EventCommand extends Command {
             throw new AristoException("Please specify a from time!\n");
         } else if (to.isBlank()) {
             throw new AristoException("Please specify a to time!\n");
+        }
+
+        if (LocalDate.parse(to, INPUT_FORMATTER).isBefore(LocalDate.parse(from, INPUT_FORMATTER))) {
+            throw new AristoException("Events cannot end earlier than they start!");
         }
 
         try {
