@@ -4,8 +4,6 @@
 
 Aristo is a simple chatbot to help users manage and track their tasks efficiently.
 
-## Setup
-
 ## Features
 - Add different types of tasks (Todo, Deadline, Event)
 - View your list of active tasks
