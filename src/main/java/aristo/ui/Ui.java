@@ -69,7 +69,6 @@ public class Ui {
                         .append(currentTask)
                         .append("\n");
             }
-            output.append("\n");
         }
 
         String message = output.toString();
@@ -93,9 +92,8 @@ public class Ui {
         if (tasks.isEmpty()) {
             output.append("There are no tasks matching that keyword.");
         } else {
-            output.append("Here are the matching tasks in your list:");
+            output.append("Here are the matching tasks in your list:\n");
             buildStringOfTasks(tasks, output);
-            output.append("\n");
         }
 
         String message = output.toString();
@@ -116,10 +114,9 @@ public class Ui {
         StringBuilder output = new StringBuilder();
 
         if (tasks.isEmpty()) {
-            output.append("There are no tasks scheduled today.\n\n");
+            output.append("There are no tasks scheduled today.");
         } else {
             output.append("Here are the tasks scheduled today:\n");
-
             buildStringOfTasks(tasks, output);
         }
 
