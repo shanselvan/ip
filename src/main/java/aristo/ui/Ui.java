@@ -114,9 +114,9 @@ public class Ui {
         StringBuilder output = new StringBuilder();
 
         if (tasks.isEmpty()) {
-            output.append("There are no tasks scheduled today.");
+            output.append("There are no tasks scheduled on ").append(date).append(".\n");
         } else {
-            output.append("Here are the tasks scheduled today:\n");
+            output.append("Here are the tasks scheduled on ").append(date).append(":\n");
             buildStringOfTasks(tasks, output);
         }
 
