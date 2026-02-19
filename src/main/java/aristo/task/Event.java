@@ -3,6 +3,9 @@ package aristo.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import aristo.exception.AristoException;
+import aristo.parser.Parser;
+
 /**
  * Represents an <code>Event</code> task in the Aristo task list.
  * <p>
@@ -21,10 +24,14 @@ public class Event extends Task {
      * @param from the start date of the event in the format "yyyy-MM-dd"
      * @param to the end date of the event in the format "yyyy-MM-dd"
      */
-    public Event(String description, String from, String to) {
+    public Event(String description, String from, String to) throws AristoException {
         super(description);
-        this.from = LocalDate.parse(from, INPUT_FORMATTER);
-        this.to = LocalDate.parse(to, INPUT_FORMATTER);
+        this.from = Parser.parseDate(from);
+        this.to = Parser.parseDate(to);
+
+        if (this.to.isBefore(this.from)) {
+            throw new AristoException("End date cannot be before start date. Please check your input.");
+        }
     }
 
     /**

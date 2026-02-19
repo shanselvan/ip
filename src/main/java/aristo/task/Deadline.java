@@ -3,6 +3,9 @@ package aristo.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import aristo.exception.AristoException;
+import aristo.parser.Parser;
+
 /**
  * Represents a <code>Deadline</code> task in the Aristo task list.
  * <p>
@@ -19,9 +22,9 @@ public class Deadline extends Task {
      * @param description the description of the task
      * @param by the deadline date in the format "yyyy-MM-dd"
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, String by) throws AristoException {
         super(description);
-        this.by = LocalDate.parse(by, INPUT_FORMATTER);
+        this.by = Parser.parseDate(by);
     }
 
     /**
