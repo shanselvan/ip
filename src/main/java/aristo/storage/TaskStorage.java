@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import aristo.exception.AristoException;
 import aristo.task.Deadline;
 import aristo.task.Event;
 import aristo.task.Task;
@@ -86,8 +87,14 @@ public class TaskStorage {
                     continue;
                 }
 
-                Task task = parseTaskFromLine(line);
-                loadedTasks.add(task);
+                try {
+                    Task task = parseTaskFromLine(line);
+                    if (task != null) {
+                        loadedTasks.add(task);
+                    }
+                } catch (AristoException e) {
+                    System.out.println("Skipping corrupted line: " + line);
+                }
             }
         } catch (IOException e) {
             System.out.println("An error occurred while loading tasks! " + e.getMessage());
@@ -104,11 +111,17 @@ public class TaskStorage {
         return parts.length >= MIN_FIELDS;
     }
 
-    private boolean parseIsDone(String doneField) {
-        return doneField.equals("1");
+    private boolean parseIsDone(String doneField) throws AristoException {
+        if (doneField.equals("1")) {
+            return true;
+        } else if (doneField.equals("0")) {
+            return false;
+        } else {
+            throw new AristoException("Task's done status is invalid!");
+        }
     }
 
-    private Task parseTaskFromLine(String line) {
+    private Task parseTaskFromLine(String line) throws AristoException {
         String[] parts = line.split(DELIMITER);
 
         if (!isValidTaskFormat(parts)) {
@@ -120,9 +133,8 @@ public class TaskStorage {
         String description = parts[DESC_INDEX];
 
         Task task = createTaskByType(taskType, parts, description);
-        assert task != null : "Null task is added to the list of loaded tasks";
 
-        if (isDone) {
+        if (task != null && isDone) {
             task.markAsDone();
         }
 
@@ -132,16 +144,16 @@ public class TaskStorage {
     /**
      * Creates a Task object based on type and parts array.
      */
-    private Task createTaskByType(String taskType, String[] parts, String description) {
+    private Task createTaskByType(String taskType, String[] parts, String description) throws AristoException {
         switch (taskType) {
         case "T":
             return new Todo(description);
 
         case "D":
-            if (parts.length < 4) {
-                throw new IllegalArgumentException("Deadline missing /by field");
+            if (parts.length >= 4) {
+                return new Deadline(description, parts[3]);
             }
-            return new Deadline(description, parts[3]);
+            return null;
 
         case "E":
             String from = (parts.length > 3) ? parts[3] : "";
