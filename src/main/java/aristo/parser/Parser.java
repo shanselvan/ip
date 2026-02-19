@@ -1,6 +1,7 @@
 package aristo.parser;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import aristo.exception.AristoException;
 
@@ -59,23 +60,25 @@ public class Parser {
 
         if (hasMissingParts(taskComponents)) {
             throw new AristoException("""
-                Ensure you have included both the task description & deadline! e.g XXX /by YYY
+                Ensure you have included both the task description & deadline in the correct format.
+                deadline <description> /by YYYY-MM-DD
                 """
             );
         }
 
-        String firstComponent = taskComponents[0];
-        String secondComponent = taskComponents[1];
+        String firstComponent = taskComponents[0].trim();
+        String secondComponent = taskComponents[1].trim();
 
         if (isEmptyComponent(firstComponent) || isEmptyComponent(secondComponent)) {
             throw new AristoException("""
-                Ensure you have included both the task description & deadline! e.g XXX /by YYY
+                Ensure you have included both the task description & deadline in the correct format.
+                deadline <description> /by YYYY-MM-DD
                 """
             );
         }
 
         assert taskComponents.length == 2 : "Parsed deadline String[] should have length 2";
-        return taskComponents;
+        return new String[]{firstComponent, secondComponent};
     }
 
     private static boolean hasMissingParts(String[] taskComponents) {
@@ -96,27 +99,51 @@ public class Parser {
      * @throws AristoException If input is missing description, start, or end times.
      */
     public static String[] parseEvent(String taskDetails) throws AristoException {
-        String[] taskComponents = taskDetails.split(" /from ", 2);
-        String firstComponent = taskComponents[0];
+        if (taskDetails == null || taskDetails.isBlank()) {
+            throw new AristoException("Event what? Please provide the description, start and end dates.");
+        }
 
-        if (hasMissingParts(taskComponents) || isEmptyComponent(firstComponent)) {
-            throw new AristoException("Have you included the description & times? e.g XXX /from YYY /to ZZZ.\n");
+        String[] taskComponents = taskDetails.split(" /from ", 2);
+        String description = taskComponents[0];
+
+        if (taskDetails.startsWith("/from") || description.isBlank()) {
+            throw new AristoException("Event description is missing! Please provide a description before /from.");
+        }
+
+        if (taskComponents.length < 2 || taskComponents[1].isBlank()) {
+            throw new AristoException("Double check you have the start and end times! Use: /from <START> /to <END>");
         }
 
         String[] fromAndTo = taskComponents[1].split(" /to ", 2);
 
-        if (hasMissingParts(fromAndTo)) {
-            throw new AristoException("Have you included the from and to times? e.g XXX /from YYY /to ZZZ.\n");
+        if (fromAndTo.length < 2) {
+            throw new AristoException("Have you included both the start and end dates, spaced and ordered correctly?");
         }
 
-        String fromComponent = fromAndTo[0];
-        String toComponent = fromAndTo[1];
-        if (isEmptyComponent(fromComponent) || isEmptyComponent(toComponent)) {
-            throw new AristoException("Have you included the from and to times? e.g XXX /from YYY /to ZZZ.\n");
+        String fromComponent = fromAndTo[0].trim();
+        String toComponent = fromAndTo[1].trim();
+
+        if (fromComponent.isEmpty()) {
+            throw new AristoException("Start date is missing! Please provide a start date after /from.");
+        }
+        if (toComponent.isEmpty()) {
+            throw new AristoException("End date is missing! Please provide an end date after /to.");
+        }
+
+        try {
+            Parser.parseDate(fromComponent);
+        } catch (AristoException e) {
+            throw new AristoException("Start date is sus... " + e.getMessage());
+        }
+
+        try {
+            Parser.parseDate(toComponent);
+        } catch (AristoException e) {
+            throw new AristoException("End date looks sus... " + e.getMessage());
         }
 
         assert fromAndTo.length == 2 : "From and to components of parsed event must be present";
-        return new String[]{firstComponent, fromComponent, toComponent};
+        return new String[]{description, fromComponent, toComponent};
     }
 
     /**
@@ -127,10 +154,22 @@ public class Parser {
      * @throws AristoException If the input cannot be parsed as a valid date.
      */
     public static LocalDate parseDate(String dateString) throws AristoException {
+        if (dateString == null || dateString.isBlank()) {
+            throw new AristoException("The date cannot be empty. Please provide a date in YYYY-MM-DD format.");
+        }
+
+        if (!dateString.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            throw new AristoException("Invalid date input: '" + dateString
+                + "'. Please use YYYY-MM-DD (e.g., 2023-01-01).");
+        }
+
         try {
-            return LocalDate.parse(dateString);
+            return LocalDate.parse(dateString, DateTimeFormatter.ISO_DATE);
         } catch (java.time.format.DateTimeParseException e) {
-            throw new AristoException("Please provide a valid date in the format YYYY-MM-DD! (e.g., 2023-01-01)\n");
+            throw new AristoException(
+                    "Invalid date input: '" + dateString
+                        + "'. Make sure the month is 01-12 and day is valid for the month."
+            );
         }
     }
 }
