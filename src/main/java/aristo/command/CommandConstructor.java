@@ -56,7 +56,7 @@ public class CommandConstructor {
             case COMMAND_FIND -> new FindCommand(taskList, storage, ui);
             case COMMAND_SCHEDULE -> new ScheduleCommand(taskList, storage, ui);
             case COMMAND_BLANK -> throw new AristoException("You got to type a command...");
-            default -> throw new AristoException("Well, never heard of that command before! :p\n");
+            default -> throw new AristoException("Well, never heard of the command " + commandName + " before!\n");
         };
     }
 }
