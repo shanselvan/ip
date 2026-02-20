@@ -24,7 +24,7 @@ public class DeleteCommand extends Command {
             throw new AristoException("Please specify a task number to delete!\n");
         }
 
-        int taskIndex = Parser.parseTaskIndex(argument);
+        int taskIndex = Parser.parseTaskIndex(argument.trim());
         Task task = taskList.removeTask(taskIndex);
         storage.saveTasksToFile(taskList);
         return ui.showTaskDeleted(task) + printNumberOfTasks();
