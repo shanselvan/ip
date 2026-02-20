@@ -1,6 +1,7 @@
 package aristo.command;
 
 import aristo.exception.AristoException;
+import aristo.parser.Parser;
 import aristo.storage.TaskStorage;
 import aristo.task.Task;
 import aristo.task.TaskList;
@@ -23,10 +24,11 @@ public class DeleteCommand extends Command {
             throw new AristoException("Please specify a task number to delete!\n");
         }
 
-        int taskIndex = Integer.parseInt(argument);
+        int taskIndex = Parser.parseTaskIndex(argument);
         Task task = taskList.removeTask(taskIndex);
         storage.saveTasksToFile(taskList);
         return ui.showTaskDeleted(task) + printNumberOfTasks();
+
     }
 
     /**

@@ -24,7 +24,7 @@ public class MarkCommand extends Command {
             throw new AristoException("Please specify a task number to mark!\n");
         }
 
-        int taskIndex = Parser.parseTaskIndex(argument);
+        int taskIndex = Parser.parseTaskIndex(argument.trim());
         Task task = taskList.getTask(taskIndex);
 
         if (task.isDone()) {

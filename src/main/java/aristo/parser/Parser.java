@@ -44,7 +44,7 @@ public class Parser {
         try {
             return Integer.parseInt(taskIndexString);
         } catch (NumberFormatException e) {
-            throw new AristoException("Please specify a task number to mark as done!\n");
+            throw new AristoException("'" + taskIndexString + "' is not a valid task number!");
         }
     }
 
@@ -104,7 +104,7 @@ public class Parser {
         }
 
         String[] taskComponents = taskDetails.split(" /from ", 2);
-        String description = taskComponents[0];
+        String description = taskComponents[0].trim();
 
         if (taskDetails.startsWith("/from") || description.isBlank()) {
             throw new AristoException("Event description is missing! Please provide a description before /from.");
